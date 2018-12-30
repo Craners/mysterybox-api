@@ -1,0 +1,24 @@
+{
+  "name": "firstone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node app.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@shopify/koa-shopify-auth": "^3.1.8",
+    "dotenv": "^6.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "koa": "^2.6.2",
+    "koa-session": "^5.10.1",
+    "next": "^7.0.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}
