@@ -14,6 +14,10 @@ What things you need to install the software and how to install them
 node v8.11.3
 ```
 
+## MockUps
+![alt text](https://github.com/Craners/Shopify/raw/master/afterSale/Screen%20Shot%202019-01-20%20at%2014.04.07.png)
+
+
 ### Installing
 
 This should help you get running.
