@@ -11,15 +11,20 @@
     "posttest": "npm run lint"
   },
   "dependencies": {
+    "@shopify/app-bridge": "^1.0.3-0",
+    "@shopify/koa-shopify-auth": "^3.1.8",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "dotenv": "^6.2.0",
     "helmet": "^3.10.0",
+    "koa-session": "^5.10.1",
     "loopback": "^3.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^6.2.0",
     "loopback-connector-mongodb": "^3.9.2",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^3.0.0"
+    "strong-error-handler": "^3.0.0",
+    "tslib": "^1.9.3"
   },
   "devDependencies": {
     "eslint": "^3.17.1",

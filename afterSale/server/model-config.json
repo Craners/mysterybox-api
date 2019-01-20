@@ -41,5 +41,9 @@
   "customer": {
     "dataSource": "db",
     "public": true
+  },
+  "auth": {
+    "dataSource": "db",
+    "public": true
   }
 }
