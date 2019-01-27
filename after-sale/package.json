@@ -7,11 +7,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "nodemon",
-    "start:debug": "nodemon --config nodemon-debug.json",
-    "prestart:prod": "rimraf dist && npm run build",
-    "start:prod": "node dist/main.js",
+    "serve": "ts-node -r tsconfig-paths/register src/main.ts",
+    "serve:dev": "nodemon",
+    "serve:debug": "nodemon --config nodemon-debug.json",
+    "preserve:prod": "rimraf dist && npm run build",
+    "serve:prod": "node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -22,10 +22,19 @@
   "dependencies": {
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
+    "@shopify/koa-shopify-auth": "^3.1.13",
+    "dotenv": "^6.2.0",
+    "hmac-validator": "^0.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "koa": "^2.6.2",
+    "koa-session": "^5.10.1",
+    "next": "^7.0.2",
     "reflect-metadata": "^0.1.12",
+    "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.1",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "@nestjs/testing": "^5.1.0",
