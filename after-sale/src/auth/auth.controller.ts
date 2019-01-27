@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Query, Req, Res } from '@nestjs/common';
 import { InitService } from './init/init.service';
 
 @Controller('auth')
@@ -6,11 +6,18 @@ export class AuthController {
     constructor(private readonly authService: InitService) { }
 
     @Get()
-    init(@Query() shop: string) {
+    async auth(@Req() req, @Res() res) {    
+        res.redirect(await this.authService.auth(req));
+    }
 
-        // return this.authService.init();
-        // console.log(id);
-        // return 'id ' + id;
-        return this.authService.confused(shop);
+    @Get("/install")
+    install(@Req() req, @Res() res) {
+
+        res.redirect(this.authService.install(req));
+    }
+
+    @Get("/app")
+    app(@Query() queryParams) {
+        return "Hello World! " + queryParams.shop;
     }
 }
