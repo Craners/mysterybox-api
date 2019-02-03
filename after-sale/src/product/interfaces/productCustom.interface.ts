@@ -1,10 +1,11 @@
 import { Document } from 'mongoose';
+import { FieldType } from '../enums/fields.enum';
 
 export interface IProductCustom extends Document {
     readonly field_name: String,
-    readonly label: String,
-    readonly values: [String],
-    readonly placeholder: String,
-    readonly required: Boolean,
-    readonly type: ['Text', 'Large Text', 'Number', 'Radio buttons', 'Checkboxes', 'Drop-down menu'] 
+    label: String,
+    values: [String],
+    placeholder: String,
+    required: Boolean,
+    type: FieldType
 }
