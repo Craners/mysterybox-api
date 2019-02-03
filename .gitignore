@@ -4,6 +4,9 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+dist
+package-lock.json
+after-sale/package-lock.json
 
 # Runtime data
 pids
