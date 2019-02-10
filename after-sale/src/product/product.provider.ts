@@ -1,10 +1,10 @@
 import { Connection } from 'mongoose';
-import { ProductCustomSchema } from './schemas/productCustom.schema';
+import { ProductFieldsSchema } from './schemas/ProductFields.schema';
 
 export const productProviders = [
     {
         provide: 'ProductModelToken',
-        useFactory: (connection: Connection) => connection.model('Products', ProductCustomSchema),
+        useFactory: (connection: Connection) => connection.model('Products', ProductFieldsSchema),
         inject: ['DbConnectionToken']
     }
 ];

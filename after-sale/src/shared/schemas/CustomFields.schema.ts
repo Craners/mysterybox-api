@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const ProductCustomSchema = new mongoose.Schema({
+export const CustomFieldsSchema = new mongoose.Schema({
     field_name: { type: String, required: true },
     label: { type: String, required: false },
     values: { type: [String], required: false },

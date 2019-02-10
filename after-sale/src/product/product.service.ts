@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { IProductCustom } from './interfaces/productCustom.interface';
-import { ProductDto } from './dto/create-product.dto';
+import { IProductCustom } from './interfaces/IProductCustom.interface';
+import { ProductDto } from './dto/productCustom.dto';
 
 @Injectable()
 export class ProductService {
@@ -10,8 +10,9 @@ export class ProductService {
     async create(createProductDto: ProductDto): Promise<IProductCustom> {
         const { field_name } = createProductDto;
 
-        const exist = this.findByFieldName(field_name);
-        if (exist) {
+        const exist = await this.findByFieldName(field_name);
+
+        if (exist !== null) {
             throw new HttpException(`Product with field name: ${field_name} already exists.`, HttpStatus.BAD_REQUEST);
         }
         const createdProduct = new this.productModel(createProductDto);
@@ -32,11 +33,37 @@ export class ProductService {
     }
 
     async findByFieldName(field_name: String): Promise<ProductDto> {
-        return this.productModel.find({ field_name: field_name }).exec();
+        return this.productModel.findOne({ field_name: field_name }).exec();
     }
 
-    async update(field_name: String, item: ProductDto): Promise<IProductCustom> {
-        return this.productModel.updateOne({field_name: field_name}, item).exec();
+    async update(ProductDto: ProductDto): Promise<IProductCustom> {
+        const { field_name, label, placeholder, required, type, values } = ProductDto;
+
+        if (!ProductDto || !field_name) {
+            throw new HttpException('Missing parameters', HttpStatus.BAD_REQUEST);
+        }
+
+        const exist = await this.findByFieldName(field_name);
+        
+        if (exist === null) {
+            throw new HttpException(`Element with field_name: ${field_name} Not Found`, HttpStatus.NOT_FOUND);
+        }
+
+        exist.label = label;
+        exist.placeholder = placeholder;
+        exist.required = required;
+        exist.type = type;
+        exist.values = values;
+
+        return this.productModel.updateOne({ field_name: field_name }, exist).exec();
+    }
+
+    async removeByFieldName(field_name: string): Promise<boolean> {
+        var res = await this.productModel.findOneAndDelete({ field_name: field_name });
+        if (res !== null) {
+            return true;
+        }
+        return false;
     }
 
 }

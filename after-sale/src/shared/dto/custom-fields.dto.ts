@@ -1,7 +1,7 @@
 import { ApiModelPropertyOptional, ApiModelProperty } from "@nestjs/swagger";
 import { FieldType } from "../enums/fields.enum";
 
-export class ProductDto {
+export class CustomDto {
     @ApiModelProperty()
     readonly field_name: string;
     @ApiModelPropertyOptional()

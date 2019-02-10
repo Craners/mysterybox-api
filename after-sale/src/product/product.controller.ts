@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Delete, HttpException, HttpStatus, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Put, Param, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { IProductCustom } from './interfaces/productCustom.interface';
-import { ProductDto } from './dto/create-product.dto';
+import { IProductCustom } from './interfaces/IProductCustom.interface';
+import { ProductDto } from './dto/productCustom.dto';
 
 @Controller('product')
 export class ProductController {
@@ -9,41 +9,26 @@ export class ProductController {
 
     @Post()
     async create(@Body() createProductDto: ProductDto) {
-        this.productService.create(createProductDto);
+        await this.productService.create(createProductDto);
     }
 
     @Get()
     async findAll(): Promise<IProductCustom[]> {
-        return this.productService.findAll();
+        return await this.productService.findAll();
     }
 
     @Put()
-    async updateProduct(@Body() productDto: ProductDto): Promise<IProductCustom> {
-        const { field_name, label, placeholder, required, type, values } = productDto;
-
-        if(!productDto || !field_name)
-        {
-            throw new HttpException('Missing parameters', HttpStatus.BAD_REQUEST);
-        }
-
-        const exist = await this.productService.findByFieldName(field_name);
-
-        if(!exist)
-        {
-            throw new HttpException(`${field_name} Not Found`, HttpStatus.NOT_FOUND);
-        }
-
-        exist.label = label;
-        exist.placeholder = placeholder;
-        exist.required = required;
-        exist.type = type;
-        exist.values = values;
-
-        return await this.productService.update(field_name, exist);
+    async updateProduct(@Body() ProductDto: ProductDto): Promise<IProductCustom> {
+        return await this.productService.update(ProductDto);
     }
 
     @Delete()
     async removeAll(): Promise<boolean> {
-        return this.productService.removeAll();
+        return await this.productService.removeAll();
+    }
+
+    @Delete(":fieldName")
+    async removeByFieldName(@Param("fieldName") fieldName: string) {
+        return await this.productService.removeByFieldName(fieldName);
     }
 }
