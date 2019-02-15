@@ -20,7 +20,7 @@ export class InitService {
         this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
         this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
         this.APP_SCOPE = config.get('APP_SCOPE');
-        this.APP_DOMAIN = "60e2cc84.ngrok.io"; //dynamic
+        this.APP_DOMAIN = config.get('APP_DOMAIN');
         this.verify = new Verify(config);
     }
 
