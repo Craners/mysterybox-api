@@ -1,13 +1,13 @@
 import { ApiModelPropertyOptional, ApiModelProperty } from "@nestjs/swagger";
 import { FieldType } from "../enums/fields.enum";
 
-export class CustomDto {
+export class CustomSchemaDto {
     @ApiModelProperty()
     readonly field_name: string;
     @ApiModelPropertyOptional()
     label?: string;
-    @ApiModelPropertyOptional({ type: [String] })
-    values?: string[];
+    @ApiModelProperty({ type: [String] })
+    values: string[];
     @ApiModelPropertyOptional()
     placeholder?: string;
     @ApiModelProperty()

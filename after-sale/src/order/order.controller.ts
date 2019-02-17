@@ -1,24 +1,24 @@
 import { Controller, Get, Post, Body, Delete, Put, Param, Query } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { OrderDto } from './dto/orderCustom.dto';
-import { IOrderCustom } from './interfaces/IOrderCustom.interface';
+import { OrderSchemaDto } from './dto/orderCustom.dto';
+import { IOrderSchemaCustom } from './interfaces/IOrderSchemaCustom.interface';
 
-@Controller('order')
+@Controller('schema/order')
 export class OrderController {
     constructor(private readonly orderService: OrderService) { }
 
     @Post()
-    async create(@Body() createOrderDto: OrderDto) {
+    async create(@Body() createOrderDto: OrderSchemaDto) {
         await this.orderService.create(createOrderDto);
     }
 
     @Get()
-    async findAll(): Promise<IOrderCustom[]> {
+    async findAll(): Promise<IOrderSchemaCustom[]> {
         return await this.orderService.findAll();
     }
 
     @Put()
-    async updateProduct(@Body() OrderDto: OrderDto): Promise<IOrderCustom> {
+    async updateProduct(@Body() OrderDto: OrderSchemaDto): Promise<IOrderSchemaCustom> {
         return await this.orderService.update(OrderDto);
     }
 

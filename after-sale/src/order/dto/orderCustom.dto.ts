@@ -1,8 +1,8 @@
 import { ApiModelProperty } from "@nestjs/swagger";
 import { OrderIdType } from "../enums/orderIdType.enum";
-import { CustomDto } from '../../shared/dto/custom-fields.dto';
+import { CustomSchemaDto } from '../../shared/dto/customSchema.dto';
 
-export class OrderDto extends CustomDto {
+export class OrderSchemaDto extends CustomSchemaDto {
     @ApiModelProperty({ enum: ["Currency"] })
     readonly order_type: OrderIdType;
 }

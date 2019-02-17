@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const ProductFieldsSchema = new mongoose.Schema({
+export const ProductSchemaFieldsSchema = new mongoose.Schema({
     product_type: {type: String, required: true, enum: ["Type", "Vendor", "Tag", "URL", "Handle"]},
     field_name: { type: String, required: true },
     label: { type: String, required: false },

@@ -1,30 +1,30 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { IProductCustom } from './interfaces/IProductCustom.interface';
-import { ProductDto } from './dto/productCustom.dto';
+import { IProductSchemaCustom } from './interfaces/IProductCustom.interface';
+import { ProductSchemaDto } from './dto/productCustom.dto';
 
 @Injectable()
 export class ProductService {
-    constructor(@Inject('ProductModelToken') private readonly productModel: Model<IProductCustom>) { }
+    constructor(@Inject('ProductSchemaModelToken') private readonly productSchemaModel: Model<IProductSchemaCustom>) { }
 
-    async create(createProductDto: ProductDto): Promise<IProductCustom> {
-        const { field_name } = createProductDto;
+    async createProductSchema(createProductSchemaDto: ProductSchemaDto): Promise<IProductSchemaCustom> {
+        const { field_name } = createProductSchemaDto;
 
-        const exist = await this.findByFieldName(field_name);
+        const exist = await this.findProductSchemaByFieldName(field_name);
 
         if (exist !== null) {
-            throw new HttpException(`Product with field name: ${field_name} already exists.`, HttpStatus.BAD_REQUEST);
+            throw new HttpException(`Product schema with field name: ${field_name} already exists.`, HttpStatus.BAD_REQUEST);
         }
-        const createdProduct = new this.productModel(createProductDto);
-        return await createdProduct.save();
+        const createdProductSchema = new this.productSchemaModel(createProductSchemaDto);
+        return await createdProductSchema.save();
     }
 
-    async findAll(): Promise<IProductCustom[]> {
-        return await this.productModel.find().exec();
+    async findAllProductSchemas(): Promise<IProductSchemaCustom[]> {
+        return await this.productSchemaModel.find().exec();
     }
 
-    async removeAll(): Promise<boolean> {
-        var res = await this.productModel.deleteMany({});
+    async removeAllProductSchemas(): Promise<boolean> {
+        var res = await this.productSchemaModel.deleteMany({});
         if (res.deletedCount > 0) {
             return true;
         }
@@ -32,19 +32,19 @@ export class ProductService {
         return false;
     }
 
-    async findByFieldName(field_name: String): Promise<ProductDto> {
-        return this.productModel.findOne({ field_name: field_name }).exec();
+    async findProductSchemaByFieldName(field_name: String): Promise<ProductSchemaDto> {
+        return this.productSchemaModel.findOne({ field_name: field_name }).exec();
     }
 
-    async update(ProductDto: ProductDto): Promise<IProductCustom> {
+    async updateProductSchema(ProductDto: ProductSchemaDto): Promise<IProductSchemaCustom> {
         const { field_name, label, placeholder, required, type, values } = ProductDto;
 
         if (!ProductDto || !field_name) {
             throw new HttpException('Missing parameters', HttpStatus.BAD_REQUEST);
         }
 
-        const exist = await this.findByFieldName(field_name);
-        
+        const exist = await this.findProductSchemaByFieldName(field_name);
+
         if (exist === null) {
             throw new HttpException(`Element with field_name: ${field_name} Not Found`, HttpStatus.NOT_FOUND);
         }
@@ -55,11 +55,11 @@ export class ProductService {
         exist.type = type;
         exist.values = values;
 
-        return this.productModel.updateOne({ field_name: field_name }, exist).exec();
+        return this.productSchemaModel.updateOne({ field_name: field_name }, exist).exec();
     }
 
-    async removeByFieldName(field_name: string): Promise<boolean> {
-        var res = await this.productModel.findOneAndDelete({ field_name: field_name });
+    async removeProductSchemaByFieldName(field_name: string): Promise<boolean> {
+        var res = await this.productSchemaModel.findOneAndDelete({ field_name: field_name });
         if (res !== null) {
             return true;
         }

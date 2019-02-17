@@ -1,10 +1,10 @@
 import { Connection } from 'mongoose';
-import { OrderFieldsSchema } from './schemas/OrderFields.schema';
+import { OrderSchemaFieldsSchema } from './schemas/OrderSchemaFields.schema';
 
 export const orderProviders = [
     {
         provide: 'OrderModelToken',
-        useFactory: (connection: Connection) => connection.model('Orders', OrderFieldsSchema),
+        useFactory: (connection: Connection) => connection.model('Orders', OrderSchemaFieldsSchema),
         inject: ['DbConnectionToken']
     }
 ];

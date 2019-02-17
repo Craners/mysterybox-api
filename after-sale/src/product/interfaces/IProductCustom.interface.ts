@@ -1,6 +1,6 @@
-import { ICustomFields } from '../../shared/interfaces/ICustomFields.interface';
+import { ISchemaCustomFields } from '../../shared/interfaces/ISchemaCustomFields.interface';
 import { ProductIdType } from '../enums/productIdType.enum';
 
-export interface IProductCustom extends ICustomFields {
+export interface IProductSchemaCustom extends ISchemaCustomFields {
     readonly product_type : ProductIdType
 }

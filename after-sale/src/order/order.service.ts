@@ -1,13 +1,13 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { IOrderCustom } from './interfaces/IOrderCustom.interface';
-import { OrderDto } from './dto/orderCustom.dto';
+import { IOrderSchemaCustom } from './interfaces/IOrderSchemaCustom.interface';
+import { OrderSchemaDto } from './dto/orderCustom.dto';
 
 @Injectable()
 export class OrderService {
-    constructor(@Inject('OrderModelToken') private readonly orderModel: Model<IOrderCustom>) { }
+    constructor(@Inject('OrderModelToken') private readonly orderModel: Model<IOrderSchemaCustom>) { }
 
-    async create(createOrderDto: OrderDto): Promise<IOrderCustom> {
+    async create(createOrderDto: OrderSchemaDto): Promise<IOrderSchemaCustom> {
         const { field_name } = createOrderDto;
 
         const exist = await this.findByFieldName(field_name);
@@ -19,7 +19,7 @@ export class OrderService {
         return await createdProduct.save();
     }
 
-    async findAll(): Promise<IOrderCustom[]> {
+    async findAll(): Promise<IOrderSchemaCustom[]> {
         return await this.orderModel.find().exec();
     }
 
@@ -32,11 +32,11 @@ export class OrderService {
         return false;
     }
 
-    async findByFieldName(field_name: String): Promise<OrderDto> {
+    async findByFieldName(field_name: String): Promise<OrderSchemaDto> {
         return this.orderModel.findOne({ field_name: field_name }).exec();
     }
 
-    async update(OrderDto: OrderDto): Promise<IOrderCustom> {
+    async update(OrderDto: OrderSchemaDto): Promise<IOrderSchemaCustom> {
         const { field_name, label, placeholder, required, type, values } = OrderDto;
 
         if (!OrderDto || !field_name) {
