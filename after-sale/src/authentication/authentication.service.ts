@@ -13,6 +13,7 @@ export class AuthenticationService {
     private APP_SCOPE: string;
     private APP_DOMAIN: string;
     private verify: Verify;
+    private appStoreTokenTest: string;
 
     constructor(config?: ConfigService) {
         this.DATABASE_USER = config.get('DATABASE_USER');
@@ -20,6 +21,7 @@ export class AuthenticationService {
         this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
         this.APP_SCOPE = config.get('APP_SCOPE');
         this.APP_DOMAIN = config.get('APP_DOMAIN');
+        this.appStoreTokenTest = config.get('appStoreTokenTest');
         this.verify = new Verify(config);
     }
 
