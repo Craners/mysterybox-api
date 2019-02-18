@@ -1,15 +1,34 @@
-import { Controller, Get, Req, Query } from '@nestjs/common';
-import { RepositoryService } from '../product/repository/repository.service';
+import { Controller, Get, Post, Body, Delete, Put, Param, Query } from '@nestjs/common';
+import { ProductService } from './product.service';
+import { IProductSchemaCustom } from './interfaces/IProductCustom.interface';
+import { ProductSchemaDto } from './dto/productCustom.dto';
 
-@Controller('product')
+@Controller('schema/product')
 export class ProductController {
-    constructor(private readonly repo: RepositoryService) { }
+    constructor(private readonly productService: ProductService) { }
+
+    @Post()
+    async create(@Body() createProductDto: ProductSchemaDto) {
+        await this.productService.createProductSchema(createProductDto);
+    }
 
     @Get()
-    async list(@Query() query) {
-        
-        console.log(query.shop);
-        
-        return this.repo.list(query);
+    async findAll(): Promise<IProductSchemaCustom[]> {
+        return await this.productService.findAllProductSchemas();
+    }
+
+    @Put()
+    async updateProduct(@Body() ProductDto: ProductSchemaDto): Promise<IProductSchemaCustom> {
+        return await this.productService.updateProductSchema(ProductDto);
+    }
+
+    @Delete()
+    async removeAll(): Promise<boolean> {
+        return await this.productService.removeAllProductSchemas();
+    }
+
+    @Delete(":fieldName")
+    async removeByFieldName(@Param("fieldName") fieldName: string) {
+        return await this.productService.removeProductSchemaByFieldName(fieldName);
     }
 }

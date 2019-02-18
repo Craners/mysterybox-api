@@ -1,13 +1,12 @@
-import { Injectable, Res, Req } from '@nestjs/common';
-import { ConfigService } from 'src/config.service';
-import { Verify } from '../../utils/verify';
-
+import { Model } from 'mongoose';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { Verify } from '../utils/verify';
 var url = require('url');
 var request = require('request-promise');
+import { ConfigService } from 'src/config.service';
 
 @Injectable()
-export class InitService {
-
+export class AuthenticationService {
     private DATABASE_USER: string;
     private SHOPIFY_API_SECRET_KEY: string;
     private SHOPIFY_API_KEY: string;
@@ -16,7 +15,7 @@ export class InitService {
     private verify: Verify;
     private appStoreTokenTest: string;
 
-    constructor(config: ConfigService) {
+    constructor(config?: ConfigService) {
         this.DATABASE_USER = config.get('DATABASE_USER');
         this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
         this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
@@ -34,14 +33,9 @@ export class InitService {
         var appScope = this.APP_SCOPE;
 
         //build the url
-        var installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=https://${this.APP_DOMAIN}/auth`;
-        // if (this.appStoreTokenTest.length > 0) {
+        var installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=https://${this.APP_DOMAIN}/authentication`;
 
-        //     return `/product?shop=${shop}`;
-        // } else {
-            //go here if you don't have the token yet
-            return installUrl;
-        // }
+        return installUrl;
     }
 
     async auth(req: any): Promise<any> {
@@ -87,9 +81,8 @@ export class InitService {
             return await request.post(accessTokenRequestUrl, { json: accessTokenPayload })
                 .then((accessTokenResponse) => {
                     let accessToken = accessTokenResponse.access_token;
-                    console.log('Access token is:' + accessToken);
 
-                    return `/product?shop=${shop}`;
+                    return `/authentication/app?shop=${shop}`;
                 })
                 .catch((error) => {
                     return error.statusCode; //.send(error.error.error_description);
@@ -99,5 +92,4 @@ export class InitService {
         //     res.redirect('/installerror');
         // }
     }
-
 }
