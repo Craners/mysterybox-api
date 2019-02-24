@@ -19,7 +19,8 @@ export class AuthenticationController {
     }
 
     @Get("/app")
-    app(@Query() queryParams) {
-        return "Hello World! " + queryParams.shop;
+    app(@Query() queryParams,@Res() res) {
+        res.redirect(this.authService.FE_DOMAIN);
+        // return "Hello World! " + queryParams.shop;
     }
 }

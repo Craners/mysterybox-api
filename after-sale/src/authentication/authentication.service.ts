@@ -14,6 +14,7 @@ export class AuthenticationService {
     private APP_DOMAIN: string;
     private verify: Verify;
     private appStoreTokenTest: string;
+    public FE_DOMAIN: string;
 
     constructor(config?: ConfigService) {
         this.DATABASE_USER = config.get('DATABASE_USER');
@@ -22,6 +23,7 @@ export class AuthenticationService {
         this.APP_SCOPE = config.get('APP_SCOPE');
         this.APP_DOMAIN = config.get('APP_DOMAIN');
         this.appStoreTokenTest = config.get('appStoreTokenTest');
+        this.FE_DOMAIN = config.get('FE_DOMAIN');
         this.verify = new Verify(config);
     }
 

@@ -17,6 +17,11 @@ export class GetDataController {
         return await this.getDataService.sayHello();
     }
 
+    @Get('product')
+    async getproduct(): Promise<string> {
+        return await this.getDataService.sayHello();
+    }
+
     // @Put()
     // async updateProduct(@Body() OrderDto: OrderDto): Promise<IOrderCustom> {
     //     return await this.orderService.update(OrderDto);
