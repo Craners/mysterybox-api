@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShopifyService } from "../shopify.service";
 
 @Component({
   selector: 'app-getproduct',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GetproductComponent implements OnInit {
 
-  constructor() { }
+  projects: [];
+  constructor(private _shopify: ShopifyService) { }
 
   ngOnInit() {
+
+    this.getProduct();
   }
 
+  private getProduct() {
+
+    return this._shopify.getProdouct().subscribe((data) => {
+      console.log(data);
+      this.projects = data;
+    });
+  }
 }

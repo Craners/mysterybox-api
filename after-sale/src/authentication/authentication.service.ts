@@ -83,7 +83,8 @@ export class AuthenticationService {
             return await request.post(accessTokenRequestUrl, { json: accessTokenPayload })
                 .then((accessTokenResponse) => {
                     let accessToken = accessTokenResponse.access_token;
-
+                    console.log(accessToken);
+                    
                     return `/authentication/app?shop=${shop}`;
                 })
                 .catch((error) => {
