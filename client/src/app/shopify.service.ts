@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,13 @@ export class ShopifyService {
   constructor(private http: HttpClient) { }
 
   getProdouct(): Observable<any> {
-    return this.http.get(`https://be.serveo.net/get`,
+    return this.http.get(`https://shopifybe.serveo.net/get`,
       { responseType: 'text' });
+  }
+
+  getProduct(shop) : Observable<any> {
+    let params = new HttpParams().set('shop', shop);
+    const url = `https://shopifybe.serveo.net/get/product`;
+    return this.http.get(url, {params: params});
   }
 }

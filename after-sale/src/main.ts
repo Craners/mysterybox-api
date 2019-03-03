@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 
+var session = require('express-session')
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
@@ -23,6 +25,8 @@ async function bootstrap() {
   app.use('/api/docs/swagger.json', (req, res) => {
     res.send(swaggerDoc);
   })
+
+  app.use(session({ secret: 'nest is awesome' }))
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

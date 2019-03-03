@@ -26,6 +26,7 @@
     "@nestjs/mongoose": "^5.2.2",
     "@nestjs/swagger": "^2.5.1",
     "dotenv": "^6.2.0",
+    "express-session": "^1.15.6",
     "hmac-validator": "^0.1.0",
     "mongoose": "^5.4.7",
     "reflect-metadata": "^0.1.12",

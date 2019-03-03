@@ -1,13 +1,37 @@
-import { Model } from 'mongoose';
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-// import { IOrderCustom } from './interfaces/IOrderCustom.interface';
-// import { OrderDto } from './dto/orderCustom.dto';
+import { ShopService } from 'src/data/shop.service';
+var request = require('request-promise');
 
 @Injectable()
-export class getDataService {
+export class GetDataService {
+  constructor(
+    private readonly shopService: ShopService,
+  ) {}
 
-    async sayHello(): Promise<string> {
-
-        return 'hello';
+  async getProducts(queryParam: any): Promise<any> {
+    if (queryParam.shop === undefined || queryParam.shop === null) {
+      return null;
     }
+
+    const shopData = await this.shopService.getShopData(queryParam.shop);
+
+    let shop = shopData['shop'];
+    let access_token = shopData['access_token'];
+
+    var options = {
+      uri: `https://${shop}/admin/products.json`,
+      headers: {
+        'cache-control': 'no-cache',
+        'X-Shopify-Access-Token': access_token,
+      },
+    };
+
+    return await request(options)
+      .then(function(data) {
+        return data;
+      })
+      .catch(function(err) {
+        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+      });
+  }
 }

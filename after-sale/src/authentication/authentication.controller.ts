@@ -1,26 +1,36 @@
-import { Controller, Get, Post, Body, Delete, Put, Param, Query, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Delete,
+  Put,
+  Param,
+  Query,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-// import { OrderDto } from './dto/orderCustom.dto';
-// import { IOrderCustom } from './interfaces/IOrderCustom.interface';
+const url = require('url');
 
 @Controller('authentication')
 export class AuthenticationController {
-    constructor(private readonly authService: AuthenticationService) { }
+  constructor(private readonly authService: AuthenticationService) {}
 
-    @Get()
-    async auth(@Req() req, @Res() res) {
-        res.redirect(await this.authService.auth(req));
-    }
+  @Get()
+  async auth(@Req() req, @Res() res) {
+    var redirectURI = await this.authService.auth(req);
 
-    @Get("/install")
-    install(@Req() req, @Res() res) {
+    res.redirect(redirectURI);
+  }
 
-        res.redirect(this.authService.install(req));
-    }
+  @Get('/install')
+  install(@Req() req, @Res() res) {
+    res.redirect(this.authService.install(req));
+  }
 
-    @Get("/app")
-    app(@Query() queryParams,@Res() res) {
-        res.redirect(this.authService.FE_DOMAIN);
-        // return "Hello World! " + queryParams.shop;
-    }
+  @Get('/app')
+  app(@Query() queryParams, @Res() res) {
+    res.redirect(`${this.authService.FE_DOMAIN}?shop=${queryParams.shop}`);
+  }
 }
