@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-// import { DatabaseModule } from '../database/database.module';
 import { GetDataController } from './getData.controller';
-import { getDataService } from './getData.service';
-// import { orderProviders } from './order.provider';
+import { GetDataService } from './getData.service';
+import { DatabaseModule } from 'dist/src/database/database.module';
+import { ShopModule } from 'src/shop/shop.module';
 
 @Module({
-    imports: [],
+    imports: [DatabaseModule, ShopModule],
     controllers: [GetDataController],
-    // providers: [OrderService, ...orderProviders]
-    providers: [getDataService]
+    providers: [GetDataService]
 })
 export class GetDataModule { }

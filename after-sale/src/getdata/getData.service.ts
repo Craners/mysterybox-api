@@ -1,65 +1,38 @@
-import { Model } from 'mongoose';
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-// import { IOrderCustom } from './interfaces/IOrderCustom.interface';
-// import { OrderDto } from './dto/orderCustom.dto';
+import { ShopService } from 'src/shop/shop.service';
+var request = require('request-promise');
 
 @Injectable()
-export class getDataService {
-    // constructor(@Inject('OrderModelToken') private readonly orderModel: Model<IOrderCustom>) { }
+export class GetDataService {
+  constructor(private readonly shopService: ShopService) {}
 
-    // async create(createOrderDto: OrderDto): Promise<IOrderCustom> {
-    //     const { field_name } = createOrderDto;
-
-    //     const exist = await this.findByFieldName(field_name);
-
-    //     if (exist !== null) {
-    //         throw new HttpException(`Order with field name: ${field_name} already exists.`, HttpStatus.BAD_REQUEST);
-    //     }
-    //     const createdProduct = new this.orderModel(createOrderDto);
-    //     return await createdProduct.save();
-    // }
-
-    // async findAll(): Promise<IOrderCustom[]> {
-    //     return await this.orderModel.find().exec();
-    // }
-
-    // async removeAll(): Promise<boolean> {
-    //     var res = await this.orderModel.deleteMany({});
-    //     if (res.deletedCount > 0) {
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
-
-    // async findByFieldName(field_name: String): Promise<OrderDto> {
-    //     return this.orderModel.findOne({ field_name: field_name }).exec();
-    // }
-
-    // async update(OrderDto: OrderDto): Promise<IOrderCustom> {
-    //     const { field_name, label, placeholder, required, type, values } = OrderDto;
-
-    //     if (!OrderDto || !field_name) {
-    //         throw new HttpException('Missing parameters', HttpStatus.BAD_REQUEST);
-    //     }
-
-    //     const exist = await this.findByFieldName(field_name);
-
-    //     if (exist === null) {
-    //         throw new HttpException(`Element with field_name: ${field_name} Not Found`, HttpStatus.NOT_FOUND);
-    //     }
-
-    //     exist.label = label;
-    //     exist.placeholder = placeholder;
-    //     exist.required = required;
-    //     exist.type = type;
-    //     exist.values = values;
-
-    //     return this.orderModel.updateOne({ field_name: field_name }, exist).exec();
-    // }
-
-    async sayHello(): Promise<string> {
-
-        return 'hello';
+  async getProducts(queryParam: any): Promise<any> {
+    if (queryParam.shop === undefined || queryParam.shop === null) {
+      throw new HttpException(
+        "no query parameter 'shop'",
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+
+    const shopData = await this.shopService.getShopData(queryParam.shop);
+
+    let shop = shopData['shop'];
+    let access_token = shopData['access_token'];
+
+    var options = {
+      uri: `https://${shop}/admin/products.json`,
+      headers: {
+        'cache-control': 'no-cache',
+        'X-Shopify-Access-Token': access_token,
+      },
+    };
+
+    return await request(options)
+      .then(function(data) {
+        return data;
+      })
+      .catch(function(err) {
+        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+      });
+  }
 }
