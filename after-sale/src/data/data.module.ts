@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
 import { dataProviders } from './data.provider';
-import { ShopService } from './shop.service';
+import { DataService } from './data.service';
 
 @Module({
     imports: [DatabaseModule],
-    providers: [ShopService, ...dataProviders],
-    exports: [ShopService]
+    providers: [DataService, ...dataProviders],
+    exports: [DataService]
 })
 export class DataModule { }

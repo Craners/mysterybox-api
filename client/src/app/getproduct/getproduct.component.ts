@@ -12,15 +12,5 @@ export class GetproductComponent implements OnInit {
   constructor(private _shopify: ShopifyService) { }
 
   ngOnInit() {
-
-    this.getProduct();
-  }
-
-  private getProduct() {
-
-    return this._shopify.getProdouct().subscribe((data) => {
-      console.log(data);
-      this.projects = data;
-    });
   }
 }

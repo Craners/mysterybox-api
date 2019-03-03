@@ -1,11 +1,9 @@
-import { Model } from 'mongoose';
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Verify } from '../utils/verify';
 var url = require('url');
 var request = require('request-promise');
 import { ConfigService } from 'src/config.service';
-import { IShop } from '../shared/interfaces/IShop.interface';
-import { ShopService } from 'src/data/shop.service';
+import { DataService } from 'src/data/data.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -19,7 +17,7 @@ export class AuthenticationService {
   public FE_DOMAIN: string;
 
   constructor(
-    private readonly shopService: ShopService,
+    private readonly dataService: DataService,
     config?: ConfigService,
   ) {
     this.DATABASE_USER = config.get('DATABASE_USER');
@@ -57,7 +55,6 @@ export class AuthenticationService {
     const regex = /^[a-z\d_.-]+[.]myshopify[.]com$/;
 
     if (shop.match(regex)) {
-      console.log('regex is ok');
       securityPass = true;
     } else {
       securityPass = false;
@@ -86,7 +83,7 @@ export class AuthenticationService {
           let accessToken = accessTokenResponse.access_token;
 
           try {
-            await this.shopService.createShopData(shop, accessToken);
+            await this.dataService.createShopData(shop, accessToken);
           } catch (error) {
             console.log(error);
           }

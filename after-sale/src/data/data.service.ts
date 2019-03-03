@@ -3,7 +3,7 @@ import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { IShop } from 'src/shared/interfaces/IShop.interface';
 
 @Injectable()
-export class ShopService {
+export class DataService {
   constructor(
     @Inject('GetShopModelToken') private readonly shopModel: Model<IShop>,
   ) {}

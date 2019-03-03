@@ -9,11 +9,6 @@ export class ShopifyService {
 
   constructor(private http: HttpClient) { }
 
-  getProdouct(): Observable<any> {
-    return this.http.get(`https://shopifybe.serveo.net/get`,
-      { responseType: 'text' });
-  }
-
   getProduct(shop) : Observable<any> {
     let params = new HttpParams().set('shop', shop);
     const url = `https://shopifybe.serveo.net/get/product`;

@@ -17,7 +17,6 @@ export class AppComponent {
   ngOnInit() {
     this.sub = this.route.queryParams.subscribe(params => {
       this.shop = params["shop"] || null;
-      console.log(this.shop);
     });
   }
 

@@ -1,11 +1,11 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { ShopService } from 'src/data/shop.service';
+import { DataService } from 'src/data/data.service';
 var request = require('request-promise');
 
 @Injectable()
 export class GetDataService {
   constructor(
-    private readonly shopService: ShopService,
+    private readonly dataService: DataService,
   ) {}
 
   async getProducts(queryParam: any): Promise<any> {
@@ -13,7 +13,7 @@ export class GetDataService {
       return null;
     }
 
-    const shopData = await this.shopService.getShopData(queryParam.shop);
+    const shopData = await this.dataService.getShopData(queryParam.shop);
 
     let shop = shopData['shop'];
     let access_token = shopData['access_token'];
