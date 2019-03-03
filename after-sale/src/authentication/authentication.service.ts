@@ -3,7 +3,7 @@ import { Verify } from '../utils/verify';
 var url = require('url');
 var request = require('request-promise');
 import { ConfigService } from 'src/config.service';
-import { DataService } from 'src/data/data.service';
+import { ShopService } from 'src/shop/shop.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,7 +17,7 @@ export class AuthenticationService {
   public FE_DOMAIN: string;
 
   constructor(
-    private readonly dataService: DataService,
+    private readonly shopService: ShopService,
     config?: ConfigService,
   ) {
     this.DATABASE_USER = config.get('DATABASE_USER');
@@ -83,7 +83,7 @@ export class AuthenticationService {
           let accessToken = accessTokenResponse.access_token;
 
           try {
-            await this.dataService.createShopData(shop, accessToken);
+            await this.shopService.createShopData(shop, accessToken);
           } catch (error) {
             console.log(error);
           }

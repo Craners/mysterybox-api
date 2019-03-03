@@ -1,19 +1,20 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { DataService } from 'src/data/data.service';
+import { ShopService } from 'src/shop/shop.service';
 var request = require('request-promise');
 
 @Injectable()
 export class GetDataService {
-  constructor(
-    private readonly dataService: DataService,
-  ) {}
+  constructor(private readonly shopService: ShopService) {}
 
   async getProducts(queryParam: any): Promise<any> {
     if (queryParam.shop === undefined || queryParam.shop === null) {
-      return null;
+      throw new HttpException(
+        "no query parameter 'shop'",
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
 
-    const shopData = await this.dataService.getShopData(queryParam.shop);
+    const shopData = await this.shopService.getShopData(queryParam.shop);
 
     let shop = shopData['shop'];
     let access_token = shopData['access_token'];
