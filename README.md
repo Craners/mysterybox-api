@@ -1,4 +1,4 @@
-# After Sale
+# Mystery Box
 
 This application takes care of collecting customer details after the sales are made.
 
@@ -27,7 +27,7 @@ npm install
 ```
 
 ```
-node .
+npm run serve
 ```
 
 the application will run on localhost:3000.
@@ -72,7 +72,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Amir Kiumarsi** - *Initial work* - [Codacy20](https://github.com/codacy20)
+* **Amir Kiumarsi** - [Codacy20](https://github.com/codacy20)
+* **Radu Alexander** - [Radu](https://github.com/RaduAlex)
 
 
 ## License
