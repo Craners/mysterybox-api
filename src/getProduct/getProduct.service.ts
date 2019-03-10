@@ -1,38 +1,46 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { ShopService } from 'src/shop/shop.service';
-var request = require('request-promise');
+import { SharedService } from 'src/shared/shared.service';
 
 @Injectable()
 export class GetProductService {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(
+    private readonly shopService: ShopService,
+    private readonly sharedService: SharedService,
+  ) {}
 
-  async getProducts(queryParam: any): Promise<any> {
-    if (queryParam.shop === undefined || queryParam.shop === null) {
-      throw new HttpException(
-        "no query parameter 'shop'",
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+  async getAllProducts(queryParam: any): Promise<any> {
+    var shopAccess = await this.sharedService.getShopAccess(queryParam);
+
+    if (shopAccess) {
+      var options = {
+        uri: `https://${shopAccess.shop}/admin/products.json`,
+        headers: {
+          'cache-control': 'no-cache',
+          'X-Shopify-Access-Token': shopAccess.access_token,
+        },
+      };
     }
 
-    const shopData = await this.shopService.getShopData(queryParam.shop);
+    return await this.sharedService.requestData(options);
+  }
 
-    let shop = shopData['shop'];
-    let access_token = shopData['access_token'];
+  async getProductsbyId(queryParam: any, id: any): Promise<any> {
+    console.log(`this is the ${queryParam.shop} and this is the id: ${id.id}`);
 
-    var options = {
-      uri: `https://${shop}/admin/products.json`,
-      headers: {
-        'cache-control': 'no-cache',
-        'X-Shopify-Access-Token': access_token,
-      },
-    };
+    var shopAccess = await this.sharedService.getShopAccess(queryParam);
 
-    return await request(options)
-      .then(function(data) {
-        return data;
-      })
-      .catch(function(err) {
-        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
+    if (shopAccess) {
+      var options = {
+        uri: `https://${shopAccess.shop}/admin/products.json`,
+        headers: {
+          'cache-control': 'no-cache',
+          'X-Shopify-Access-Token': shopAccess.access_token,
+        },
+      };
+    }
+
+    return await this.sharedService.requestData(options);
+    throw new Error('Method not implemented.');
   }
 }

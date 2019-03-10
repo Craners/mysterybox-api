@@ -11,10 +11,10 @@
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "run-script",
-                "start:dev"
+                "serve:dev"
             ],
             "port": 5000,
-            "cwd": "${workspaceFolder}/after-sale",
+            "cwd": "${workspaceFolder}",
             "console": "internalConsole"
         }
     ]

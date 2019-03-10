@@ -10,12 +10,17 @@ import {
 } from '@nestjs/common';
 import { GetProductService } from './getProduct.service';
 
-@Controller('get')
+@Controller('/product')
 export class GetProductController {
-  constructor(private readonly getDataService: GetProductService) {}
+  constructor(private readonly getProductService: GetProductService) {}
 
-  @Get('product')
-  async getproduct(@Query() queryParams): Promise<string> {
-    return await this.getDataService.getProducts(queryParams);
+  @Get('/')
+  async getProduct(@Query() queryParams): Promise<string> {
+    return await this.getProductService.getAllProducts(queryParams);
+  }
+
+  @Get('/:id')
+  async getProductbyId(@Param() id, @Query() queryParams): Promise<string> {
+    return await this.getProductService.getProductsbyId(queryParams, id);
   }
 }
