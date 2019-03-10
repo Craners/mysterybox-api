@@ -3,7 +3,7 @@ import { ShopService } from 'src/shop/shop.service';
 var request = require('request-promise');
 
 @Injectable()
-export class GetDataService {
+export class GetProductService {
   constructor(private readonly shopService: ShopService) {}
 
   async getProducts(queryParam: any): Promise<any> {
