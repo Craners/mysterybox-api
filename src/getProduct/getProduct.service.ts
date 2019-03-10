@@ -1,11 +1,9 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { ShopService } from 'src/shop/shop.service';
 import { SharedService } from 'src/shared/shared.service';
 
 @Injectable()
 export class GetProductService {
   constructor(
-    private readonly shopService: ShopService,
     private readonly sharedService: SharedService,
   ) {}
 

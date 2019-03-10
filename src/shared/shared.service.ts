@@ -6,11 +6,15 @@ var request = require('request-promise');
 export class SharedService {
   constructor(private readonly shopService: ShopService) {}
 
+  _include_headers = function(body, response, resolveWithFullResponse) {
+    return { headers: response.headers, data: body };
+  };
+
   async requestData(options): Promise<any> {
+    options['transform'] = this._include_headers;
     return await request(options)
-      .then(function(data) {
-        var jsonObject = JSON.parse(data);
-        return jsonObject;
+      .then(function(body) {
+        return body;
       })
       .catch(function(err) {
         console.log(err);
