@@ -9,9 +9,12 @@ export class ShopService {
   ) {}
 
   async getShopData(shop): Promise<any> {
-    const shopData = await this.shopModel.findOne({ shop: shop }).exec();
-
-    return shopData;
+    try {
+      const shopData = await this.shopModel.findOne({ shop: shop }).exec();
+      return shopData;
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   async createShopData(shop, access_token): Promise<any> {

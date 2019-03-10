@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ShopModule } from 'src/shop/shop.module';
 import { CustomCollectionController } from './custom-collection.controller';
 import { CustomCollectionService } from './custom-collection.service';
+import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
-  imports: [ShopModule],
+  imports: [SharedModule],
   controllers: [CustomCollectionController],
   providers: [CustomCollectionService],
 })

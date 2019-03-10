@@ -3,10 +3,26 @@ import { ShopService } from 'src/shop/shop.service';
 var request = require('request-promise');
 
 @Injectable()
-export class GetDataService {
+export class SharedService {
   constructor(private readonly shopService: ShopService) {}
 
-  async getProducts(queryParam: any): Promise<any> {
+  _include_headers = function(body, response, resolveWithFullResponse) {
+    return { headers: response.headers, data: body };
+  };
+
+  async requestData(options): Promise<any> {
+    options['transform'] = this._include_headers;
+    return await request(options)
+      .then(function(body) {
+        return body;
+      })
+      .catch(function(err) {
+        console.log(err);
+        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+      });
+  }
+
+  async getShopAccess(queryParam: any): Promise<any> {
     if (queryParam.shop === undefined || queryParam.shop === null) {
       throw new HttpException(
         "no query parameter 'shop'",
@@ -19,20 +35,9 @@ export class GetDataService {
     let shop = shopData['shop'];
     let access_token = shopData['access_token'];
 
-    var options = {
-      uri: `https://${shop}/admin/products.json`,
-      headers: {
-        'cache-control': 'no-cache',
-        'X-Shopify-Access-Token': access_token,
-      },
+    return {
+      shop: shop,
+      access_token: access_token,
     };
-
-    return await request(options)
-      .then(function(data) {
-        return data;
-      })
-      .catch(function(err) {
-        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
   }
 }
