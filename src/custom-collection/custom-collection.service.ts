@@ -16,8 +16,7 @@ export class CustomCollectionService {
         headers: {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopData.access_token,
-          'Content-Type':'application/json'
-        }
+        },
       };
     }
 
@@ -42,7 +41,6 @@ export class CustomCollectionService {
         headers: {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopData.access_token,
-          'Content-Type':'application/json'
         },
         json: true,
       };
