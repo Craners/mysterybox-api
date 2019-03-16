@@ -17,6 +17,7 @@ export class CustomCollectionService {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopData.access_token,
         },
+        json: true,
       };
     }
 

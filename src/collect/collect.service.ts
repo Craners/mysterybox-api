@@ -16,6 +16,7 @@ export class CollectService {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopData.access_token,
         },
+        json: true,
       };
     }
 
@@ -67,6 +68,7 @@ export class CollectService {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopData.access_token,
         },
+        json: true,
       };
     }
 

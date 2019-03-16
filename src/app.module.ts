@@ -7,6 +7,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CustomCollectionModule } from './custom-collection/custom-collection.module';
 import { SmartCollectionModule } from './smart-collection/smart-collection.module';
 import { CollectModule } from './collect/collect.module';
+import { CustomCollectionSchemaModule } from './schemas/custom-collection-schema/custom-collection-schema.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { CollectModule } from './collect/collect.module';
     AuthenticationModule,
     CustomCollectionModule,
     SmartCollectionModule,
-    CollectModule
+    CollectModule,
+    CustomCollectionSchemaModule
   ],
   controllers: [AppController],
   providers: [AppService],
