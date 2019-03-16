@@ -34,10 +34,10 @@ export class CustomCollectionSchemaController {
     return await this.customCollectionSchemaService.findByShop(queryParams);
   }
 
-  @Delete()
-  async removeByShop(@Query() queryParams: ShopParams) {
-    return await this.customCollectionSchemaService.removeAllByShop(
-      queryParams,
-    );
-  }
+  // @Delete()
+  // async removeByShop(@Query() queryParams: ShopParams) {
+  //   return await this.customCollectionSchemaService.removeAllByShop(
+  //     queryParams,
+  //   );
+  // }
 }

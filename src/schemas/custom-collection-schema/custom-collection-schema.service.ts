@@ -49,19 +49,19 @@ export class CustomCollectionSchemaService {
     });
   }
 
-  async removeAllByShop(queryParam: any): Promise<boolean> {
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
+  // async removeAllByShop(queryParam: any): Promise<boolean> {
+  //   var shopAccess = await this.sharedService.getShopAccess(queryParam);
 
-    if (shopAccess) {
-      var res = await this.customCollectionSchemaWrapperModel.deleteOne({
-        shop: shopAccess.shop,
-      });
-      if (res.deletedCount > 0) {
-        return true;
-      }
-      return false;
-    }
+  //   if (shopAccess) {
+  //     var res = await this.customCollectionSchemaWrapperModel.deleteOne({
+  //       shop: shopAccess.shop,
+  //     });
+  //     if (res.deletedCount > 0) {
+  //       return true;
+  //     }
+  //     return false;
+  //   }
 
-    return false;
-  }
+  //   return false;
+  // }
 }
