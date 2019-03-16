@@ -1,5 +1,6 @@
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 import { variantDto } from './variant.dto';
+import { ValidateNested } from 'class-validator';
 
 export class ProductPostDto {
   @ApiModelProperty()
@@ -11,5 +12,6 @@ export class ProductPostDto {
   @ApiModelProperty()
   readonly product_type?: string;
   @ApiModelPropertyOptional()
+  @ValidateNested()
   readonly variants?: variantDto;
 }
