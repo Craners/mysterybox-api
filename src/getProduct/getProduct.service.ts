@@ -7,7 +7,7 @@ import { ProductDtoAlt } from './dto/product.dto.alt';
 import { CollectionDto } from './dto/collection.dto';
 
 @Injectable()
-export class GetProductService {
+export class ProductService {
   constructor(private readonly sharedService: SharedService) {}
 
   async getAllProducts(queryParam: ShopParams): Promise<any> {

@@ -8,15 +8,15 @@ import {
   Param,
   Query,
 } from '@nestjs/common';
-import { GetProductService } from './getProduct.service';
+import { ProductService } from './getProduct.service';
 import { ShopParams } from 'src/shared/params/shop.params';
 import { ProductPostDto } from './dto/product.dto';
 import { ProductDtoAlt } from './dto/product.dto.alt';
 import { CollectionDto } from './dto/collection.dto';
 
 @Controller('/product')
-export class GetProductController {
-  constructor(private readonly getProductService: GetProductService) {}
+export class ProductController {
+  constructor(private readonly getProductService: ProductService) {}
 
   // TODO: it's not being hit properly.
   // it hits the :id by mistake. fix this!
