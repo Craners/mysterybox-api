@@ -18,6 +18,7 @@ export class CustomCollectionSchemaController {
     private readonly customCollectionSchemaService: CustomCollectionSchemaService,
   ) {}
 
+  //TODO: Delete by collectionId and productId
   @Post()
   async create(
     @Query() queryParams: ShopParams,
