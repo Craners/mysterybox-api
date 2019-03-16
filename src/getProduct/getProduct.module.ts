@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { GetProductController } from './getProduct.controller';
-import { GetProductService } from './getProduct.service';
+import { ProductController } from './getProduct.controller';
+import { ProductService } from './getProduct.service';
 import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
   imports: [SharedModule],
-  controllers: [GetProductController],
-  providers: [GetProductService],
+  controllers: [ProductController],
+  providers: [ProductService],
 })
 export class GetProductModule {}
