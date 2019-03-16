@@ -20,6 +20,7 @@ export class GetProductService {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopAccess.access_token,
         },
+        json: true, // Automatically stringifies the body to JSON
       };
     }
 
@@ -55,9 +56,7 @@ export class GetProductService {
     collection_id: CollectionDto,
   ): Promise<any> {
     var shopAccess = await this.sharedService.getShopAccess(queryParam);
-
-    console.log(collection_id.collection_id);
-
+    // console.log(collection_id.collection_id);
     if (shopAccess) {
       var options = {
         uri: `https://${shopAccess.shop}/admin/products.json?collection_id=${

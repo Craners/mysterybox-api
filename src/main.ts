@@ -2,14 +2,15 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
-var session = require('express-session')
+var session = require('express-session');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-  const hostDomain = "http://localhost:3000";
+  const hostDomain = 'http://localhost:3000';
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle('AfterSale REST API')
@@ -21,12 +22,13 @@ async function bootstrap() {
     .build();
 
   const swaggerDoc = SwaggerModule.createDocument(app, swaggerOptions);
+  app.useGlobalPipes(new ValidationPipe());
 
   app.use('/api/docs/swagger.json', (req, res) => {
     res.send(swaggerDoc);
-  })
+  });
 
-  app.use(session({ secret: 'nest is awesome' }))
+  app.use(session({ secret: 'nest is awesome' }));
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -41,8 +43,8 @@ async function bootstrap() {
     swaggerOptions: {
       docExpansion: 'list',
       filter: true,
-      showRequestDuration: true
-    }
+      showRequestDuration: true,
+    },
   });
 
   app.useGlobalFilters(new HttpExceptionFilter());
