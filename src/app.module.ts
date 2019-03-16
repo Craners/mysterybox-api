@@ -6,6 +6,8 @@ import { GetProductModule } from './getProduct/Product.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CustomCollectionModule } from './custom-collection/custom-collection.module';
 import { SmartCollectionModule } from './smart-collection/smart-collection.module';
+import { CollectModule } from './collect/collect.module';
+import { CustomCollectionSchemaModule } from './schemas/custom-collection-schema/custom-collection-schema.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { SmartCollectionModule } from './smart-collection/smart-collection.modul
     AuthenticationModule,
     CustomCollectionModule,
     SmartCollectionModule,
+    CollectModule,
+    CustomCollectionSchemaModule
   ],
   controllers: [AppController],
   providers: [AppService],
