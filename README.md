@@ -16,7 +16,7 @@ node v8.11.3
 
 ## MockUps
 
-![Mock up 1](https://i.ibb.co/PQf9BgC/2019-03-10-14-45-44.jpg)
+![Mock up 1](https://raw.githubusercontent.com/Craners/mysteryBox-api/master/artboard1.png)
 
 ### Installing
 
