@@ -20,8 +20,7 @@ import { ValidationPipe } from 'src/common/pipes/validation.pipe';
 export class ProductController {
   constructor(private readonly getProductService: ProductService) {}
 
-  // TODO: it's not being hit properly.
-  // it hits the :id by mistake. fix this!
+  // TODO: Remove product by id.
   @Get('/collection')
   async getProductbyCollection(
     @Query() collection_id: CollectionDto,

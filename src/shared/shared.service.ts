@@ -17,6 +17,20 @@ export class SharedService {
       });
   }
 
+  async checkParameterExists(
+    params: any,
+    parameterToCheck: string,
+  ): Promise<boolean> {
+    if (
+      params[parameterToCheck] === undefined ||
+      params[parameterToCheck] === null
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   async getShopAccess(queryParam: any): Promise<any> {
     if (queryParam.shop === undefined || queryParam.shop === null) {
       throw new HttpException(
