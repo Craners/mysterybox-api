@@ -5,8 +5,8 @@ import { ConfigModule } from '../config.module';
 import { ShopModule } from 'src/shop/shop.module';
 
 @Module({
-    imports: [ConfigModule, ShopModule],
-    controllers: [AuthenticationController],
-    providers: [AuthenticationService]
+  imports: [ConfigModule, ShopModule],
+  controllers: [AuthenticationController],
+  providers: [AuthenticationService],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

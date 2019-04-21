@@ -18,9 +18,9 @@ export class CustomCollectionSchemaService {
     queryParam: any,
     customCollectionSchemaDto: CustomCollectionSchemaDto,
   ): Promise<any> {
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
+    const shopAccess = await this.sharedService.getShopAccess(queryParam);
 
-    var shopObject = await this.findShop(shopAccess.shop);
+    const shopObject = await this.findShop(shopAccess.shop);
 
     if (shopObject === null || shopObject === undefined) {
       const createdCustomCollectionSchemaWrapper = new this.customCollectionSchemaWrapperModel(
@@ -37,7 +37,7 @@ export class CustomCollectionSchemaService {
   }
 
   async findByShop(queryParam: any): Promise<any> {
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
+    const shopAccess = await this.sharedService.getShopAccess(queryParam);
     if (shopAccess) {
       return await this.findShop(shopAccess.shop);
     }

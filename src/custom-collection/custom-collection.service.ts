@@ -1,7 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CutomCollectionPostDto } from './dto/custom-collection-post.dto';
 import { SharedService } from 'src/shared/shared.service';
-var request = require('request-promise');
 
 @Injectable()
 export class CustomCollectionService {
@@ -9,9 +8,9 @@ export class CustomCollectionService {
 
   async getCustomCollections(queryParam: any): Promise<any> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
-
+    let options;
     if (shopData) {
-      var options = {
+      options = {
         uri: `https://${shopData.shop}/admin/custom_collections.json`,
         headers: {
           'cache-control': 'no-cache',
@@ -29,9 +28,9 @@ export class CustomCollectionService {
     queryParam: any,
   ): Promise<any> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
-
+    let options;
     if (shopData) {
-      var options = {
+      options = {
         method: 'POST',
         uri: `https://${shopData.shop}/admin/custom_collections.json`,
         body: {

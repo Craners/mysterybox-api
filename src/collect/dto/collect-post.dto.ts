@@ -1,9 +1,9 @@
-import { ApiModelProperty } from "@nestjs/swagger";
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class CollectPostDto {
-    @ApiModelProperty()
-    readonly productId: string;
-    
-    @ApiModelProperty()
-    readonly collectionId: string;
+  @ApiModelProperty()
+  readonly productId: string;
+
+  @ApiModelProperty()
+  readonly collectionId: string;
 }

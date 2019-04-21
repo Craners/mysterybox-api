@@ -4,8 +4,8 @@ import { shopProviders } from './shop.provider';
 import { ShopService } from './shop.service';
 
 @Module({
-    imports: [DatabaseModule],
-    providers: [ShopService, ...shopProviders],
-    exports: [ShopService]
+  imports: [DatabaseModule],
+  providers: [ShopService, ...shopProviders],
+  exports: [ShopService],
 })
-export class ShopModule { }
+export class ShopModule {}

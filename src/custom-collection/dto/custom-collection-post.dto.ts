@@ -1,6 +1,6 @@
-import { ApiModelProperty } from "@nestjs/swagger";
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class CutomCollectionPostDto {
-    @ApiModelProperty()
-    readonly title: string;
+  @ApiModelProperty()
+  readonly title: string;
 }

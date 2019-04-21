@@ -1,5 +1,4 @@
-
 export interface IShop {
-    readonly shop : String
-    readonly access_token: String
+  readonly shop: string;
+  readonly access_token: string;
 }

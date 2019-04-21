@@ -8,7 +8,7 @@ import { RemoveProductFromCollectionParams } from 'src/shared/params/removeProdu
 @Controller('collect')
 export class CollectController {
     constructor(private readonly collectService: CollectService) { }
-  
+
     @Get()
     async getCollects(@Query() queryParams: ShopParams): Promise<any> {
         return await this.collectService.getCollects(queryParams);

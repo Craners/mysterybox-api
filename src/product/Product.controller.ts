@@ -23,13 +23,13 @@ export class ProductController {
   // TODO: Remove product by id.
   @Get('/collection')
   async getProductbyCollection(
-    @Query() collection_id: CollectionDto,
+    @Query() collectionId: CollectionDto,
     @Query() queryParams: ShopParams,
   ): Promise<any> {
     // console.log(queryParams.shop + ' | ' + collection_id.collection_id);
     return await this.getProductService.getProductsbyCollection(
       queryParams,
-      collection_id,
+      collectionId,
     );
   }
 

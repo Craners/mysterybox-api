@@ -7,9 +7,9 @@ export class SmartCollectionService {
 
   async getSmartCollections(queryParam: any): Promise<any> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
-
+    let options;
     if (shopData) {
-      var options = {
+      options = {
         uri: `https://${shopData.shop}/admin/smart_collections.json`,
         headers: {
           'cache-control': 'no-cache',

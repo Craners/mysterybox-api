@@ -17,8 +17,8 @@ export class ShopService {
     }
   }
 
-  async createShopData(shop, access_token): Promise<any> {
-    const tuple = new this.shopModel({ shop, access_token });
+  async createShopData(shop, accessToken): Promise<any> {
+    const tuple = new this.shopModel({ shop, accessToken });
     const exists = await this.shopModel.findOne({ shop: shop }).exec();
 
     if (exists === null) {

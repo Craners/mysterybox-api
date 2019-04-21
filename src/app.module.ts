@@ -17,7 +17,7 @@ import { CustomCollectionSchemaModule } from './schemas/custom-collection-schema
     CustomCollectionModule,
     SmartCollectionModule,
     CollectModule,
-    CustomCollectionSchemaModule
+    CustomCollectionSchemaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
