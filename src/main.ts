@@ -22,7 +22,7 @@ async function bootstrap() {
     .build();
 
   const swaggerDoc = SwaggerModule.createDocument(app, swaggerOptions);
-  app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalPipes(new ValidationPipe());
 
   app.use('/api/docs/swagger.json', (req, res) => {
     res.send(swaggerDoc);

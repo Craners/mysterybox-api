@@ -81,19 +81,21 @@ export class ProductService {
   ): Promise<any> {
     var shopAccess = await this.sharedService.getShopAccess(queryParam);
 
+    console.log(productPostDto.variants.option);
+    
     var product = {
       title: productPostDto.title,
       body_html: productPostDto.body_html,
-      vendor: shopAccess.shop,
-      product_type: 'MysteryBox',
+      vendor: productPostDto.vendor,
+      product_type: productPostDto.product_type,
       // TODO: this product does not accept multiple variant.
       // it should accept up to 3 variant
       variants: [
         {
-          option1: productPostDto.variants[0].option,
-          price: productPostDto.variants[0].price,
-          sku: productPostDto.variants[0].sku,
-        },
+          option1: productPostDto.variants.option,
+          price: productPostDto.variants.price,
+          sku: productPostDto.variants.sku,
+        }
       ],
     };
 
@@ -102,7 +104,7 @@ export class ProductService {
         method: 'POST',
         uri: `https://${shopAccess.shop}/admin/products.json`,
         body: {
-          product,
+          product
         },
         headers: {
           'cache-control': 'no-cache',

@@ -1,14 +1,14 @@
 import { ApiModelPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsNumber, ValidateNested } from 'class-validator';
+// import { IsString, IsNumber, ValidateNested } from 'class-validator';
 
 export class variantDto {
   @ApiModelPropertyOptional()
-  @IsString()
+  // @IsString()
   readonly option?: string;
   @ApiModelPropertyOptional()
-  @IsNumber()
-  readonly price?: number;
+  // @IsString()
+  readonly price?: string;
   @ApiModelPropertyOptional()
-  @IsString()
+  // @IsString()
   readonly sku?: string;
 }
