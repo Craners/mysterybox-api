@@ -1,6 +1,11 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CutomCollectionPostDto } from './dto/custom-collection-post.dto';
 import { SharedService } from 'src/shared/shared.service';
+import { verify } from 'specified';
+import {
+  ResultCutomCollectionPostDto,
+  ResultCutomCollectionBase,
+} from './dto/result.custom-collection.dto';
 
 @Injectable()
 export class CustomCollectionService {
@@ -24,9 +29,9 @@ export class CustomCollectionService {
   }
 
   async createCustomCollection(
-    customCollectionPostDto: CutomCollectionPostDto,
     queryParam: any,
-  ): Promise<any> {
+    customCollectionPostDto: CutomCollectionPostDto,
+  ): Promise<ResultCutomCollectionBase> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
     let options;
     if (shopData) {
@@ -36,6 +41,7 @@ export class CustomCollectionService {
         body: {
           custom_collection: {
             title: customCollectionPostDto.title,
+            published: false,
           },
         },
         headers: {
@@ -46,6 +52,10 @@ export class CustomCollectionService {
       };
     }
 
-    return await this.sharedService.requestData(options);
+    const result: ResultCutomCollectionBase = await this.sharedService.requestData(
+      options,
+    );
+    const resultVerify = verify(ResultCutomCollectionPostDto, result).value();
+    return result;
   }
 }

@@ -7,5 +7,6 @@ import { SharedModule } from 'src/shared/shared.module';
   imports: [SharedModule],
   controllers: [CustomCollectionController],
   providers: [CustomCollectionService],
+  exports: [CustomCollectionService],
 })
 export class CustomCollectionModule {}

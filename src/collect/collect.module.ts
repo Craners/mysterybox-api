@@ -7,5 +7,6 @@ import { CollectService } from './collect.service';
   imports: [SharedModule],
   controllers: [CollectController],
   providers: [CollectService],
+  exports: [CollectService],
 })
 export class CollectModule {}
