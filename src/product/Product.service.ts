@@ -80,8 +80,6 @@ export class ProductService {
     productPostDto: ProductPostDto,
   ): Promise<any> {
     var shopAccess = await this.sharedService.getShopAccess(queryParam);
-
-    console.log(productPostDto.variants.option);
     
     var product = {
       title: productPostDto.title,
