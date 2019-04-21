@@ -1,6 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { ShopService } from 'src/shop/shop.service';
-var request = require('request-promise');
+import request = require('request-promise');
 
 @Injectable()
 export class SharedService {
@@ -8,11 +8,11 @@ export class SharedService {
 
   async requestData(options): Promise<any> {
     return await request(options)
-      .then(function(body) {
+      .then(body => {
         return body;
       })
-      .catch(function(err) {
-        console.log(err);
+      .catch(err => {
+        // console.log(err);
         throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
       });
   }
@@ -34,19 +34,21 @@ export class SharedService {
   async getShopAccess(queryParam: any): Promise<any> {
     if (queryParam.shop === undefined || queryParam.shop === null) {
       throw new HttpException(
-        "no query parameter 'shop'",
+        `no query parameter 'shop'`,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
 
     const shopData = await this.shopService.getShopData(queryParam.shop);
 
-    let shop = shopData['shop'];
-    let access_token = shopData['access_token'];
+    const shopKey = 'shop';
+    const shop = shopData[shopKey];
+    const accessTokenKey = 'access_token';
+    const accessToken = shopData[accessTokenKey];
 
     return {
       shop: shop,
-      access_token: access_token,
+      access_token: accessToken,
     };
   }
 }

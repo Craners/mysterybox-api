@@ -11,10 +11,10 @@ export class ProductService {
   constructor(private readonly sharedService: SharedService) {}
 
   async getAllProducts(queryParam: ShopParams): Promise<any> {
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
-
+    const shopAccess = await this.sharedService.getShopAccess(queryParam);
+    let options;
     if (shopAccess) {
-      var options = {
+      options = {
         uri: `https://${shopAccess.shop}/admin/products.json`,
         headers: {
           'cache-control': 'no-cache',
@@ -31,12 +31,13 @@ export class ProductService {
     queryParam: ShopParams,
     id: ProductDtoAlt,
   ): Promise<any> {
-    console.log(`this is the ${queryParam.shop} and this is the id: ${id.id}`);
+    // console.log(`this is the ${queryParam.shop} and this is the id: ${id.id}`);
 
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
+    const shopAccess = await this.sharedService.getShopAccess(queryParam);
 
+    let options;
     if (shopAccess) {
-      var options = {
+      options = {
         uri: `https://${shopAccess.shop}/admin/products/${id.id}.json`,
         headers: {
           'cache-control': 'no-cache',
@@ -46,21 +47,21 @@ export class ProductService {
       };
     }
 
-    var shopData = await this.sharedService.requestData(options);
+    const shopData = await this.sharedService.requestData(options);
 
     return shopData;
   }
 
   async getProductsbyCollection(
     queryParam: ShopParams,
-    collection_id: CollectionDto,
+    collectionId: CollectionDto,
   ): Promise<any> {
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
-    // console.log(collection_id.collection_id);
+    const shopAccess = await this.sharedService.getShopAccess(queryParam);
+    let options;
     if (shopAccess) {
-      var options = {
+      options = {
         uri: `https://${shopAccess.shop}/admin/products.json?collection_id=${
-          collection_id.collection_id
+          collectionId.collectionId
         }`,
         headers: {
           'cache-control': 'no-cache',
@@ -70,7 +71,7 @@ export class ProductService {
       };
     }
 
-    var shopData = await this.sharedService.requestData(options);
+    const shopData = await this.sharedService.requestData(options);
 
     return shopData;
   }
@@ -79,13 +80,13 @@ export class ProductService {
     queryParam: ShopParams,
     productPostDto: ProductPostDto,
   ): Promise<any> {
-    var shopAccess = await this.sharedService.getShopAccess(queryParam);
-    
-    var product = {
+    const shopAccess = await this.sharedService.getShopAccess(queryParam);
+
+    const product = {
       title: productPostDto.title,
-      body_html: productPostDto.body_html,
+      body_html: productPostDto.bodyHtml,
       vendor: productPostDto.vendor,
-      product_type: productPostDto.product_type,
+      product_type: productPostDto.productType,
       // TODO: this product does not accept multiple variant.
       // it should accept up to 3 variant
       variants: [
@@ -93,16 +94,16 @@ export class ProductService {
           option1: productPostDto.variants.option,
           price: productPostDto.variants.price,
           sku: productPostDto.variants.sku,
-        }
+        },
       ],
     };
-
+    let options;
     if (shopAccess) {
-      var options = {
+      options = {
         method: 'POST',
         uri: `https://${shopAccess.shop}/admin/products.json`,
         body: {
-          product
+          product,
         },
         headers: {
           'cache-control': 'no-cache',
@@ -112,7 +113,7 @@ export class ProductService {
       };
     }
 
-    var shopData = await this.sharedService.requestData(options);
+    const shopData = await this.sharedService.requestData(options);
 
     return shopData;
   }

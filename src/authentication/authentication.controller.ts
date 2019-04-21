@@ -11,7 +11,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-const url = require('url');
+import url = require('url');
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -19,7 +19,7 @@ export class AuthenticationController {
 
   @Get()
   async auth(@Req() req, @Res() res) {
-    var redirectURI = await this.authService.auth(req);
+    const redirectURI = await this.authService.auth(req);
 
     res.redirect(redirectURI);
   }

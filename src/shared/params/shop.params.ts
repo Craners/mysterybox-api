@@ -1,6 +1,6 @@
-import { ApiModelProperty } from "@nestjs/swagger";
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class ShopParams {
-    @ApiModelProperty()
-    shop: string;
-  }
+  @ApiModelProperty()
+  shop: string;
+}

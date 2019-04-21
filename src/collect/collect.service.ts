@@ -8,9 +8,9 @@ export class CollectService {
 
   async getCollects(queryParam: any): Promise<any> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
-
+    let options;
     if (shopData) {
-      var options = {
+      options = {
         uri: `https://${shopData.shop}/admin/collects.json`,
         headers: {
           'cache-control': 'no-cache',
@@ -28,9 +28,9 @@ export class CollectService {
     queryParam: any,
   ): Promise<any> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
-
+    let options;
     if (shopData) {
-      var options = {
+      options = {
         method: 'POST',
         uri: `https://${shopData.shop}/admin/collects.json`,
         body: {
@@ -57,9 +57,9 @@ export class CollectService {
       queryParam,
       'collection_id',
     );
-
+    let options;
     if (shopData && paramExists) {
-      var options = {
+      options = {
         method: 'DELETE',
         uri: `https://${shopData.shop}/admin/collects/${
           queryParam.collection_id

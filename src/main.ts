@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 
-var session = require('express-session');
+import session = require('express-session');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
