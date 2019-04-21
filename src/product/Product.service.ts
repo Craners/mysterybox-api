@@ -8,7 +8,7 @@ import { CollectionDto } from './dto/collection.dto';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly sharedService: SharedService) {}
+  constructor(private readonly sharedService: SharedService) { }
 
   async getAllProducts(queryParam: ShopParams): Promise<any> {
     var shopAccess = await this.sharedService.getShopAccess(queryParam);
@@ -61,7 +61,7 @@ export class ProductService {
       var options = {
         uri: `https://${shopAccess.shop}/admin/products.json?collection_id=${
           collection_id.collection_id
-        }`,
+          }`,
         headers: {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopAccess.access_token,
@@ -80,7 +80,7 @@ export class ProductService {
     productPostDto: ProductPostDto,
   ): Promise<any> {
     var shopAccess = await this.sharedService.getShopAccess(queryParam);
-    
+
     var product = {
       title: productPostDto.title,
       body_html: productPostDto.body_html,
@@ -93,7 +93,12 @@ export class ProductService {
           option1: productPostDto.variants.option,
           price: productPostDto.variants.price,
           sku: productPostDto.variants.sku,
-        }
+        },
+      ],
+      images: [
+        {
+          src: productPostDto.image,
+        },
       ],
     };
 
