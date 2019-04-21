@@ -14,4 +14,6 @@ export class ProductPostDto {
   @ApiModelPropertyOptional()
   // @ValidateNested()
   readonly variants?: VariantDto;
+  @ApiModelPropertyOptional()
+  readonly image?: string;
 }
