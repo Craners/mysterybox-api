@@ -4,6 +4,8 @@ import { CutomCollectionPostDto } from './custom-collection/dto/custom-collectio
 import { ShopParams } from './shared/params/shop.params';
 import { ResultCutomCollectionBase } from './custom-collection/dto/result.custom-collection.dto';
 import { CollectService } from './collect/collect.service';
+import { ResultCollectPostDtoBase } from './collect/dto/result.collect-post.dto';
+import { ProductDtoAlt } from 'dist/getProduct/dto/product.dto.alt';
 
 @Injectable()
 export class AppService {
@@ -19,14 +21,17 @@ export class AppService {
   async createMagic(
     queryParams: ShopParams,
     cutomCollectionPostDto: CutomCollectionPostDto,
+    arrProduct: [ProductDtoAlt],
   ): Promise<object> {
     const resultCutomCollectionBase: ResultCutomCollectionBase = await this.customCollectionService.createCustomCollection(
       queryParams,
       cutomCollectionPostDto,
     );
-    const productId = 'asda';
-    const x = await this.collectService.addProductToCollection(
-      { productId, collectionId: resultCutomCollectionBase.id + '' },
+    const arrProductId = arrProduct.map(element => {
+      return element.id;
+    });
+    const resultCollectPostDtoBase: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
+      { productId: arrProductId[0], collectionId: resultCutomCollectionBase.id + '' },
       queryParams,
     );
 

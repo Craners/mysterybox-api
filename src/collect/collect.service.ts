@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { SharedService } from 'src/shared/shared.service';
 import { CollectPostDto } from './dto/collect-post.dto';
+import { verify } from 'specified';
+import { ResultCollectPostDto, ResultCollectPostDtoBase } from './dto/result.collect-post.dto';
 
 @Injectable()
 export class CollectService {
@@ -26,7 +28,7 @@ export class CollectService {
   async addProductToCollection(
     collectPostDto: CollectPostDto,
     queryParam: any,
-  ): Promise<any> {
+  ): Promise<ResultCollectPostDtoBase> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
     let options;
     if (shopData) {
@@ -47,7 +49,13 @@ export class CollectService {
       };
     }
 
-    return await this.sharedService.requestData(options);
+    const result = await this.sharedService.requestData(options);
+    const resultVerify = verify(ResultCollectPostDto, result).value();
+    return {
+      collectionId: resultVerify.collect.collection_id,
+      id: resultVerify.collect.id,
+      productId: resultVerify.collect.product_id,
+    };
   }
 
   async removeProductFromCollection(queryParam: any): Promise<any> {
