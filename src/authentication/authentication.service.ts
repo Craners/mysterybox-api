@@ -3,7 +3,7 @@ import { Verify } from '../utils/verify';
 import url = require('url');
 import request = require('request-promise');
 import { ConfigService } from 'src/config.service';
-import { ShopService } from 'src/shop/shop.service';
+import { ShopDbService } from 'src/shop-db/shop-db.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,7 +17,7 @@ export class AuthenticationService {
   public FE_DOMAIN: string;
 
   constructor(
-    private readonly shopService: ShopService,
+    private readonly shopService: ShopDbService,
     config?: ConfigService,
   ) {
     this.DATABASE_USER = config.get('DATABASE_USER');
@@ -82,7 +82,7 @@ export class AuthenticationService {
           const accessToken = accessTokenResponse.access_token;
 
           try {
-            await this.shopService.createShopData(shop, accessToken);
+            await this.shopService.createShopDbData(shop, accessToken);
           } catch (error) {
             throw Error(error);
           }

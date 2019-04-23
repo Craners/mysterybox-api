@@ -8,6 +8,7 @@ import { CustomCollectionModule } from './custom-collection/custom-collection.mo
 import { SmartCollectionModule } from './smart-collection/smart-collection.module';
 import { CollectModule } from './collect/collect.module';
 import { CustomCollectionSchemaModule } from './schemas/custom-collection-schema/custom-collection-schema.module';
+import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CustomCollectionSchemaModule } from './schemas/custom-collection-schema
     SmartCollectionModule,
     CollectModule,
     CustomCollectionSchemaModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [AppService],

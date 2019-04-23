@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { SharedService } from './shared.service';
-import { ShopModule } from 'src/shop/shop.module';
+import { ShopDbModule } from 'src/shop-db/shop-db.module';
 
 @Module({
-  imports: [ShopModule],
+  imports: [ShopDbModule],
   providers: [SharedService],
   exports: [SharedService],
 })
