@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../database/database.module';
-import { shopProviders } from './shop.provider';
+import { SharedModule } from 'src/shared/shared.module';
+import { ShopController } from './shop.controller';
 import { ShopService } from './shop.service';
 
 @Module({
-  imports: [DatabaseModule],
-  providers: [ShopService, ...shopProviders],
-  exports: [ShopService],
+  imports: [SharedModule],
+  controllers: [ShopController],
+  providers: [ShopService],
 })
 export class ShopModule {}

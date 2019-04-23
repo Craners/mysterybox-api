@@ -1,10 +1,10 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { ShopService } from 'src/shop/shop.service';
+import { ShopDbService } from 'src/shop-db/shop-db.service';
 import request = require('request-promise');
 
 @Injectable()
 export class SharedService {
-  constructor(private readonly shopService: ShopService) {}
+  constructor(private readonly shopService: ShopDbService) {}
 
   async requestData(options): Promise<any> {
     return await request(options)
@@ -12,7 +12,7 @@ export class SharedService {
         return body;
       })
       .catch(err => {
-        // console.log(err);
+        console.log(err);
         throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
       });
   }
@@ -39,7 +39,7 @@ export class SharedService {
       );
     }
 
-    const shopData = await this.shopService.getShopData(queryParam.shop);
+    const shopData = await this.shopService.getShopDbData(queryParam.shop);
 
     const shopKey = 'shop';
     const shop = shopData[shopKey];
