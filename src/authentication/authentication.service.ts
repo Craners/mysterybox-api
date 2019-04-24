@@ -4,6 +4,9 @@ import url = require('url');
 import request = require('request-promise');
 import { ConfigService } from 'src/config.service';
 import { ShopDbService } from 'src/shop-db/shop-db.service';
+import { CustomCollectionService } from 'src/custom-collection/custom-collection.service';
+import { CutomCollectionPostDto } from 'src/custom-collection/dto/custom-collection-post.dto';
+import { ImageDto } from 'src/custom-collection/dto/image.dto';
 
 @Injectable()
 export class AuthenticationService {
@@ -18,6 +21,7 @@ export class AuthenticationService {
 
   constructor(
     private readonly shopService: ShopDbService,
+    private readonly customCollectionService: CustomCollectionService,
     config?: ConfigService,
   ) {
     this.DATABASE_USER = config.get('DATABASE_USER');
@@ -30,6 +34,18 @@ export class AuthenticationService {
     this.verify = new Verify(config);
   }
 
+  mysteryBoxesCollectionDto(): CutomCollectionPostDto {
+    const dto = new CutomCollectionPostDto();
+    dto.title = 'Mystery-boxes-collection';
+    dto.published = true;
+    dto.image = new ImageDto();
+    dto.image.src = 'https://git.io/fjsqG';
+    dto.image.alt = 'Mystery boxes logo';
+    dto.collects = null;
+
+    return dto;
+  }
+
   install(req: any): any {
     const shop = req.query.shop;
     const appId = this.SHOPIFY_API_KEY;
@@ -39,7 +55,7 @@ export class AuthenticationService {
 
     const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=https://${
       this.APP_DOMAIN
-    }/authentication`;
+      }/authentication`;
 
     return installUrl;
   }
@@ -81,11 +97,9 @@ export class AuthenticationService {
         .then(async accessTokenResponse => {
           const accessToken = accessTokenResponse.access_token;
 
-          try {
-            await this.shopService.createShopDbData(shop, accessToken);
-          } catch (error) {
-            throw Error(error);
-          }
+          await this.shopService.createShopDbData(shop, accessToken);
+          //TODO: this doesn't work here.
+          // await this.customCollectionService.createCustomCollection(shop, this.mysteryBoxesCollectionDto());
 
           return `/authentication/app?shop=${shop}`;
         })
