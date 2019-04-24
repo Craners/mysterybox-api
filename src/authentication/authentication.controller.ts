@@ -11,7 +11,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import url = require('url');
+import { ShopParams } from 'src/shared/params/shop.params';
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -30,7 +30,7 @@ export class AuthenticationController {
   }
 
   @Get('/app')
-  app(@Query() queryParams, @Res() res) {
+  app(@Query() queryParams: ShopParams, @Res() res) {
     res.redirect(`${this.authService.FE_DOMAIN}?shop=${queryParams.shop}`);
   }
 }

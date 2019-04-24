@@ -1,6 +1,14 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { ImageDto } from './image.dto';
+import { ProductsDto } from './products.dto';
 
 export class CutomCollectionPostDto {
   @ApiModelProperty()
-  readonly title: string;
+  title: string;
+  @ApiModelProperty()
+  published: boolean;
+  @ApiModelPropertyOptional()
+  image: ImageDto;
+  @ApiModelPropertyOptional({ isArray: true, type: ProductsDto })
+  collects: ProductsDto[];
 }
