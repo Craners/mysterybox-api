@@ -10,7 +10,7 @@ export class ShopDbService {
 
   async getShopDbData(shop): Promise<any> {
     try {
-      const shopData = await this.shopModel.findOne({ shop: shop }).exec();
+      const shopData = await this.shopModel.findOne({ shop }).exec();
       return shopData;
     } catch (err) {
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -19,7 +19,7 @@ export class ShopDbService {
 
   async createShopDbData(shop, accessToken): Promise<any> {
     const tuple = new this.shopModel({ shop, accessToken });
-    const exists = await this.shopModel.findOne({ shop: shop }).exec();
+    const exists = await this.shopModel.findOne({ shop }).exec();
 
     if (exists === null) {
       return await tuple.save();

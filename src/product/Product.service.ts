@@ -5,6 +5,8 @@ import * as _ from 'lodash';
 import { ProductPostDto } from './dto/product.dto';
 import { ProductDtoAlt } from './dto/product.dto.alt';
 import { CollectionDto } from './dto/collection.dto';
+import { verify } from 'specified';
+import { ResultCreateProduct, ResultCreateProductBase } from './dto/result.product.dto';
 
 @Injectable()
 export class ProductService {
@@ -79,7 +81,7 @@ export class ProductService {
   async createProduct(
     queryParam: ShopParams,
     productPostDto: ProductPostDto,
-  ): Promise<any> {
+  ): Promise<ResultCreateProductBase> {
     const shopAccess = await this.sharedService.getShopAccess(queryParam);
 
     const product = {
@@ -119,7 +121,7 @@ export class ProductService {
     }
 
     const shopData = await this.sharedService.requestData(options);
-
+    const resultVerify = verify(ResultCreateProduct, shopData).value();
     return shopData;
   }
 }

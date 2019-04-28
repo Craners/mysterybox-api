@@ -1,9 +1,11 @@
 import { Type, adjust } from 'specified';
 
 export class ResultCutomCollectionBase {
-  readonly id: number;
-  handle: string;
-  title: string;
+  custom_collection: {
+    readonly id: number
+    handle: string;
+    title: string;
+  };
 }
 
 export const ResultCutomCollectionSpec = {

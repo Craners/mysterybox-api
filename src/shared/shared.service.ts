@@ -12,7 +12,6 @@ export class SharedService {
         return body;
       })
       .catch(err => {
-        console.log(err);
         throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
       });
   }
@@ -47,7 +46,7 @@ export class SharedService {
     const accessToken = shopData[accessTokenKey];
 
     return {
-      shop: shop,
+      shop,
       access_token: accessToken,
     };
   }
