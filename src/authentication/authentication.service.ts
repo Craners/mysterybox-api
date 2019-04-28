@@ -41,7 +41,6 @@ export class AuthenticationService {
     dto.image = new ImageDto();
     dto.image.src = 'https://git.io/fjsqG';
     dto.image.alt = 'Mystery boxes logo';
-    dto.collects = null;
 
     return dto;
   }
@@ -98,8 +97,7 @@ export class AuthenticationService {
           const accessToken = accessTokenResponse.access_token;
 
           await this.shopService.createShopDbData(shop, accessToken);
-          //TODO: this doesn't work here.
-          // await this.customCollectionService.createCustomCollection(shop, this.mysteryBoxesCollectionDto());
+          await this.customCollectionService.createCustomCollection({ shop }, this.mysteryBoxesCollectionDto());
 
           return `/authentication/app?shop=${shop}`;
         })

@@ -28,6 +28,15 @@ export class CustomCollectionService {
     return await this.sharedService.requestData(options);
   }
 
+  async getCustomCollectionByTitle(queryParam: any, collectionName: string): Promise<any> {
+    const collections = await this.getCustomCollections(queryParam);
+    const filtered = collections.custom_collections.filter(collection => {
+      return collection.title === collectionName;
+    });
+
+    return filtered[0];
+  }
+
   checkCollectionExists(collections, title): boolean {
     const filtered = collections.custom_collections.filter(collection => {
       return collection.title === title;
@@ -42,12 +51,10 @@ export class CustomCollectionService {
   ): Promise<ResultCutomCollectionBase> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
     let options;
+    let exists;
     if (shopData) {
       const collections = await this.getCustomCollections(shopData);
-      const exists = this.checkCollectionExists(collections, customCollectionPostDto.title);
-      if (exists) {
-        throw new HttpException(`Collection ${customCollectionPostDto.title} already exists.`, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
+      exists = this.checkCollectionExists(collections, customCollectionPostDto.title);
 
       options = {
         method: 'POST',
@@ -68,10 +75,13 @@ export class CustomCollectionService {
       };
     }
 
-    const result: ResultCutomCollectionBase = await this.sharedService.requestData(
-      options,
-    );
-    const resultVerify = verify(ResultCutomCollectionPostDto, result).value();
-    return result;
+    if (!exists) {
+      const result: ResultCutomCollectionBase = await this.sharedService.requestData(
+        options,
+      );
+      const resultVerify = verify(ResultCutomCollectionPostDto, result).value();
+      return result;
+    }
+    return null;
   }
 }

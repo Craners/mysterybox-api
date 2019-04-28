@@ -6,13 +6,14 @@ import { ResultCutomCollectionBase } from './custom-collection/dto/result.custom
 import { CollectService } from './collect/collect.service';
 import { ResultCollectPostDtoBase } from './collect/dto/result.collect-post.dto';
 import { ProductDtoAlt } from 'dist/getProduct/dto/product.dto.alt';
+import { ImageDto } from './custom-collection/dto/image.dto';
 
 @Injectable()
 export class AppService {
   constructor(
     private readonly customCollectionService: CustomCollectionService,
     private readonly collectService: CollectService,
-  ) {}
+  ) { }
 
   getHello(): string {
     return 'Hello World!';
