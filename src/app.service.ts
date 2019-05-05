@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CustomCollectionService } from './custom-collection/custom-collection.service';
 import { CutomCollectionPostDto } from './custom-collection/dto/custom-collection-post.dto';
 import { ShopParams } from './shared/params/shop.params';
@@ -8,6 +8,7 @@ import { ResultCollectPostDtoBase } from './collect/dto/result.collect-post.dto'
 import { ProductDtoAlt } from 'src/product/dto/product.dto.alt';
 import { ProductService } from 'src/product/Product.service';
 import { ResultCreateProductBase } from './product/dto/result.product.dto';
+import { SharedService } from './shared/shared.service';
 
 @Injectable()
 export class AppService {
@@ -15,7 +16,8 @@ export class AppService {
     private readonly customCollectionService: CustomCollectionService,
     private readonly collectService: CollectService,
     private readonly productService: ProductService,
-  ) {}
+    private readonly sharedService: SharedService,
+  ) { }
 
   getHello(): string {
     return 'Hello World!';
@@ -32,6 +34,10 @@ export class AppService {
       cutomCollectionPostDto,
     );
 
+    if (resultCutomCollectionBase == null) {
+      return new HttpException(`Collection '${cutomCollectionPostDto.title}' already exists.`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     const arrProductId = arrProduct.map(element => {
       return element.id;
     });
@@ -40,7 +46,7 @@ export class AppService {
       const resultCollectPostDtoBase: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
         {
           productId: element,
-          collectionId: resultCutomCollectionBase.custom_collection.id + '',
+          collectionId: resultCutomCollectionBase.custom_collection.id.toString(),
         },
         queryParams,
       );
@@ -50,6 +56,17 @@ export class AppService {
       queryParams,
       productPostDto,
     );
+
+    const shopData = await this.sharedService.getShopAccess(queryParams);
+    if (shopData) {
+      const resultCollectPostDtoBase: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
+        {
+          productId: resultCreateProductBase.product.id.toString(),
+          collectionId: shopData.mystery_box_collection_id,
+        },
+        queryParams,
+      );
+    }
 
     return {
       resultCreateProduct: {

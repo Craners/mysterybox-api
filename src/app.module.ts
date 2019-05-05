@@ -9,6 +9,7 @@ import { SmartCollectionModule } from './smart-collection/smart-collection.modul
 import { CollectModule } from './collect/collect.module';
 import { CustomCollectionSchemaModule } from './schemas/custom-collection-schema/custom-collection-schema.module';
 import { ShopModule } from './shop/shop.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -20,8 +21,9 @@ import { ShopModule } from './shop/shop.module';
     CollectModule,
     CustomCollectionSchemaModule,
     ShopModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
