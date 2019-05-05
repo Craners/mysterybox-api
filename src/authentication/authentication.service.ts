@@ -97,7 +97,11 @@ export class AuthenticationService {
           const accessToken = accessTokenResponse.access_token;
 
           await this.shopService.createShopDbData(shop, accessToken);
-          await this.customCollectionService.createCustomCollection({ shop }, this.mysteryBoxesCollectionDto());
+          const result = await this.customCollectionService.createCustomCollection({ shop }, this.mysteryBoxesCollectionDto());
+          const mysteryBoxCollectionId = result != null ? result.custom_collection.id : null;
+          if (mysteryBoxCollectionId !== null) {
+            await this.shopService.updateShopDbData(shop, mysteryBoxCollectionId.toString());
+          }
 
           return `/authentication/app?shop=${shop}`;
         })

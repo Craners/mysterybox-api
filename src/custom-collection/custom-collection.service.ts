@@ -51,7 +51,7 @@ export class CustomCollectionService {
   ): Promise<ResultCutomCollectionBase> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
     let options;
-    let exists;
+    let exists = true;
     if (shopData) {
       const collections = await this.getCustomCollections(shopData);
       exists = this.checkCollectionExists(collections, customCollectionPostDto.title);

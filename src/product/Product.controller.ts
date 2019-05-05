@@ -43,7 +43,7 @@ export class ProductController {
   async createProduct(
     @Query() queryParams: ShopParams,
     @Body(new ValidationPipe()) productPostDto: ProductPostDto,
-  ): Promise<string> {
+  ): Promise<object> {
     return await this.getProductService.createProduct(
       queryParams,
       productPostDto,

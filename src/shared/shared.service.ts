@@ -4,7 +4,7 @@ import request = require('request-promise');
 
 @Injectable()
 export class SharedService {
-  constructor(private readonly shopService: ShopDbService) {}
+  constructor(private readonly shopService: ShopDbService) { }
 
   async requestData(options): Promise<any> {
     return await request(options)
@@ -12,7 +12,6 @@ export class SharedService {
         return body;
       })
       .catch(err => {
-        console.log(err);
         throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
       });
   }
@@ -40,15 +39,22 @@ export class SharedService {
     }
 
     const shopData = await this.shopService.getShopDbData(queryParam.shop);
+    if (shopData !== null) {
+      const shopKey = 'shop';
+      const shop = shopData[shopKey];
+      const accessTokenKey = 'access_token';
+      const accessToken = shopData[accessTokenKey];
+      const mysteryBoxCollectionIdKey = 'mystery_box_collection_id';
+      const mysteryBoxCollectionId = shopData[mysteryBoxCollectionIdKey];
 
-    const shopKey = 'shop';
-    const shop = shopData[shopKey];
-    const accessTokenKey = 'access_token';
-    const accessToken = shopData[accessTokenKey];
+      return {
+        shop,
+        access_token: accessToken,
+        mystery_box_collection_id: mysteryBoxCollectionId,
+      };
+    }
 
-    return {
-      shop: shop,
-      access_token: accessToken,
-    };
+    return null;
+
   }
 }
