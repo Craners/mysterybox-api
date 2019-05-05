@@ -7,12 +7,12 @@ import { ProductPostDto } from './product/dto/product.dto';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  // @Get()
+  // async test(@Query() queryParams: ShopParams): Promise<boolean> {
+  //   return await this.appService.test(queryParams);
+  // }
 
   @Post()
   async createMagic(
