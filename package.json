@@ -5,7 +5,7 @@
   "author": "codacy20",
   "license": "MIT",
   "scripts": {
-    "start": "pm2 start src/main.js -i max — name=\”My-App\”",
+    "start": "pm2 start src/main.js -i max — name=\"My-App\"",
     "restart": "pm2 restart all",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
