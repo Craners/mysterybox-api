@@ -9,6 +9,7 @@ import { ProductDtoAlt } from 'src/product/dto/product.dto.alt';
 import { ProductService } from 'src/product/Product.service';
 import { ResultCreateProductBase } from './product/dto/result.product.dto';
 import { SharedService } from './shared/shared.service';
+import { ProductPostDto } from './product/dto/product.dto';
 
 @Injectable()
 export class AppService {
@@ -17,7 +18,7 @@ export class AppService {
     private readonly collectService: CollectService,
     private readonly productService: ProductService,
     private readonly sharedService: SharedService,
-  ) { }
+  ) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -27,7 +28,7 @@ export class AppService {
     queryParams: ShopParams,
     cutomCollectionPostDto: CutomCollectionPostDto,
     arrProduct: [ProductDtoAlt],
-    productPostDto,
+    productPostDto: ProductPostDto,
   ): Promise<object> {
     const resultCutomCollectionBase: ResultCutomCollectionBase = await this.customCollectionService.createCustomCollection(
       queryParams,
@@ -35,7 +36,10 @@ export class AppService {
     );
 
     if (resultCutomCollectionBase == null) {
-      return new HttpException(`Collection '${cutomCollectionPostDto.title}' already exists.`, HttpStatus.INTERNAL_SERVER_ERROR);
+      return new HttpException(
+        `Collection '${cutomCollectionPostDto.title}' already exists.`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
 
     const arrProductId = arrProduct.map(element => {
@@ -59,7 +63,7 @@ export class AppService {
 
     const shopData = await this.sharedService.getShopAccess(queryParams);
     if (shopData) {
-      const resultCollectPostDtoBase: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
+      const addedProductToMysteryBoxCollection: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
         {
           productId: resultCreateProductBase.product.id.toString(),
           collectionId: shopData.mystery_box_collection_id,
