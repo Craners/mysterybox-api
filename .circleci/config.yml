@@ -33,12 +33,17 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: npm install
+      - run: 
+          name: install-dependencies
+          command: npm install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - deploy:
+          name: digital-ocean
+          command: ssh -o "StrictHostKeyChecking no" user@hostname "cd ~/mysteryBox-api; git pull; npm install; forever start app.js"
 
       # # run tests!
       # - run: yarn test

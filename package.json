@@ -5,6 +5,8 @@
   "author": "codacy20",
   "license": "MIT",
   "scripts": {
+    "start": "pm2 start src/main.js -i max — name=\”My-App\”",
+    "restart": "pm2 restart all",
     "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "serve": "ts-node -r tsconfig-paths/register src/main.ts",
@@ -31,6 +33,7 @@
     "express-session": "^1.15.6",
     "hmac-validator": "^0.1.0",
     "mongoose": "^5.4.7",
+    "pm2": "^3.5.0",
     "reflect-metadata": "^0.1.12",
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
