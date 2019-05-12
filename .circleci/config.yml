@@ -43,7 +43,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - deploy:
           name: digital-ocean
-          command: ssh -o "StrictHostKeyChecking no" user@hostname "cd ~/mysteryBox-api; git pull; npm install; forever start app.js"
+          command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
