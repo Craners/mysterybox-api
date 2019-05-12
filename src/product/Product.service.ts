@@ -93,9 +93,9 @@ export class ProductService {
       // it should accept up to 3 variant
       variants: [
         {
-          option1: productPostDto.variants.option,
-          price: productPostDto.variants.price,
-          sku: productPostDto.variants.sku,
+          option1: productPostDto.variants[0].option1,
+          price: productPostDto.variants[0].price,
+          sku: productPostDto.variants[0].sku,
         },
       ],
       images: [
