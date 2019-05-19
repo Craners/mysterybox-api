@@ -61,6 +61,9 @@ export class AppService {
       productPostDto,
     );
 
+    console.log(resultCreateProductBase);
+    
+
     const shopData = await this.sharedService.getShopAccess(queryParams);
     if (shopData) {
       const addedProductToMysteryBoxCollection: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(

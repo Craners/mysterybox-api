@@ -9,13 +9,16 @@ export class ResultCreateProductBase {
 }
 
 export const ResultCreateProductSpec = {
-  id: Type.number,
-  handle: Type.string,
-  title: Type.string,
+  product: {
+    id: Type.number,
+    handle: Type.string,
+    title: Type.string,
+  }
 };
 
 export const ResultCreateProduct = Type.object({
-  product: adjust(Type.object(ResultCreateProductSpec), {
+  statusCode: Type.string,
+  body: adjust(Type.object(ResultCreateProductSpec.product), {
     strict: false,
   }),
 });

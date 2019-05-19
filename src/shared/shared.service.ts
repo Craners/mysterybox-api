@@ -1,5 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { ShopDbService } from 'src/shop-db/shop-db.service';
+import { ResponseModel } from '../shared/responseModel';
 import request = require('request-promise');
 
 @Injectable()
@@ -7,9 +8,10 @@ export class SharedService {
   constructor(private readonly shopService: ShopDbService) { }
 
   async requestData(options): Promise<any> {
+    options.resolveWithFullResponse = true;
     return await request(options)
-      .then(body => {
-        return body;
+      .then(res => {
+        return new ResponseModel(res.body, res.statusCode);
       })
       .catch(err => {
         throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
