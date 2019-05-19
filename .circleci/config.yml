@@ -6,9 +6,8 @@ version: 2
 jobs:
   build:
     branches:
-      ignore:
-        - develop
-        - /feature-.*/
+      only:
+        - master
 
     docker:
       # specify the version you desire here
@@ -20,8 +19,6 @@ jobs:
       # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
-
-    
 
     steps:
       - checkout
@@ -45,10 +42,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run: scp -o StrictHostKeyChecking=no -r ./dist/Playground/* $DROPLET_USER@$DROPLET_IP://home/username/playground/ 
-      - deploy:
-          name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
+      - run: scp -o StrictHostKeyChecking=no -r ./dist/mysteryBox-api/* $DROPLET_USER@$DROPLET_IP://home/username/mysteryBox-api/ 
+      # - deploy:
+      #     name: digital-ocean
+      #     command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
