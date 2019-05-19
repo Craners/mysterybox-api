@@ -46,7 +46,7 @@ jobs:
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/mysteryBox-api/* $DROPLET_USER@$DROPLET_IP://home/$DROPLET_USER/mysteryBox-api/ 
       - deploy:
           name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd repo; git pull; npm install; forever start src/main.js"
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "git pull; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
