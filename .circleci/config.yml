@@ -27,7 +27,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "b0:8e:77:6b:c1:73:57:85:21:08:df:27:ce:d0:bf:88"
+            - "db:fb:12:b8:63:a4:5a:4c:e5:35:ca:d8:0e:ad:b2:6b"
 
       # Download and cache dependencies
       - restore_cache:
@@ -38,15 +38,16 @@ jobs:
 
       - run: 
           name: install-dependencies
-          command: npm install
+          command: npm install --silent
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
       - deploy:
           name: digital-ocean
-          command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
+          command: ssh $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
