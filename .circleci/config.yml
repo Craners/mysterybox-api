@@ -14,17 +14,18 @@ jobs:
           fingerprints:
             - "db:fb:12:b8:63:a4:5a:4c:e5:35:ca:d8:0e:ad:b2:6b"
 
-      - run:
-          shell: /bin/sh
-          command: | 
-            sudo apt-get update
-            sudo apt-get install nodejs
-            sudo apt-get install npm
-            sudo apt-get install build-essential libssl-dev
+      # - run:
+      #     name: install npm
+      #     shell: /bin/sh
+      #     command: | 
+      #       sudo apt-get update
+      #       sudo apt-get install nodejs
+      #       sudo apt-get install npm
+      #       sudo apt-get install build-essential libssl-dev
       # - run: sudo apt install npm
-      - run: 
-          name: install-dependencies
-          command: npm install --silent
+      # - run: 
+      #     name: install npm dependencies
+      #     command: npm install --silent
 
       - run:
           shell: /bin/sh
@@ -32,7 +33,7 @@ jobs:
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/ 
       - deploy:
           name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; sudo apt-get install npm; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
