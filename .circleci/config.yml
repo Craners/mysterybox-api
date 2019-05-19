@@ -10,15 +10,9 @@ jobs:
         - master
 
     docker:
-      # specify the version you desire here
       - image: circleci/node:8.10
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
+    # working_directory: ~/repo
 
     steps:
       - checkout
@@ -26,21 +20,21 @@ jobs:
           fingerprints:
             - "db:fb:12:b8:63:a4:5a:4c:e5:35:ca:d8:0e:ad:b2:6b"
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+      # # Download and cache dependencies
+      # - restore_cache:
+      #     keys:
+      #       - v1-dependencies-{{ checksum "package.json" }}
+      #       # fallback to using the latest cache if no exact match is found
+      #       - v1-dependencies-
 
       - run: 
           name: install-dependencies
           command: npm install --silent
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
           shell: /bin/sh
@@ -48,7 +42,7 @@ jobs:
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/ 
       - deploy:
           name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no -v $DROPLET_USER@$DROPLET_IP "npm install; forever start src/main.js"
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
