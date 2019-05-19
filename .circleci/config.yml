@@ -45,10 +45,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: scp -o StrictHostKeyChecking=no -r ./dist/Playground/* $DROPLET_USER@$DROPLET_IP://home/username/playground/ 
-      # - deploy:
-      #     name: digital-ocean
-      #     command: ssh $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
+      # - run: scp -o StrictHostKeyChecking=no -r ./dist/Playground/* $DROPLET_USER@$DROPLET_IP://home/username/playground/ 
+      - deploy:
+          name: digital-ocean
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; git pull; npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
