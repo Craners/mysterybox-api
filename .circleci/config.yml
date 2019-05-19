@@ -42,7 +42,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: echo $DIR
+      - run:
+          shell: /bin/sh
+          command: ls
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/ 
       - deploy:
           name: digital-ocean
