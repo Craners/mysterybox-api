@@ -48,7 +48,7 @@ jobs:
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/ 
       - deploy:
           name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no -v $DROPLET_USER@$DROPLET_IP "cd /home/circleci/repo; git pull; npm install; forever start src/main.js"
+          command: ssh -o StrictHostKeyChecking=no -v $DROPLET_USER@$DROPLET_IP "npm install; forever start src/main.js"
 
       # # run tests!
       # - run: yarn test
