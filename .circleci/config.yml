@@ -14,7 +14,7 @@ jobs:
           fingerprints:
             - "db:fb:12:b8:63:a4:5a:4c:e5:35:ca:d8:0e:ad:b2:6b"
 
-      - run: apt install npm
+      - run: sudo apt install npm
       - run: 
           name: install-dependencies
           command: npm install --silent
