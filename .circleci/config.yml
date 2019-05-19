@@ -14,7 +14,14 @@ jobs:
           fingerprints:
             - "db:fb:12:b8:63:a4:5a:4c:e5:35:ca:d8:0e:ad:b2:6b"
 
-      - run: sudo apt install npm
+      - run:
+          shell: /bin/sh
+          command: | 
+            sudo apt-get update
+            sudo apt-get install nodejs
+            sudo apt-get install npm
+            sudo apt-get install build-essential libssl-dev
+      # - run: sudo apt install npm
       - run: 
           name: install-dependencies
           command: npm install --silent
