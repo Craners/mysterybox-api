@@ -1,0 +1,19 @@
+version: '3.4'
+
+x-env:
+  &env
+  PORT: 80
+
+services:
+  # External
+  revproxy:
+    image: 'nginx:alpine'
+    command: nginx -g 'daemon off;'
+    ports:
+      - 3000:3000
+
+  mysterybox-api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
