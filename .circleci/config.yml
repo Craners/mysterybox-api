@@ -19,11 +19,8 @@ jobs:
             ls;pwd;
 
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/
-      # - deploy:
-      #     name: digital-ocean
-      #     command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "docker build -t amir/mysterybox-api .;docker images;"
+      - deploy:
+          name: digital-ocean
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~//home/circleci/project; ./setup.sh -y"
       # # run tests!
       # - run: yarn test
-      - deploy:
-          branch: master
-          command: ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; ./setup.sh -y"
