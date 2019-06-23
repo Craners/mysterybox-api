@@ -25,7 +25,6 @@ jobs:
       # # run tests!
       # - run: yarn test
       - deployment:
-        master:
           branch: master
           commands:
           - echo 'deploying master branch'
