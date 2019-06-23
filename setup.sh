@@ -8,6 +8,7 @@ sudo apt-get upgrade
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'
 sudo apt update
-apt-cache policy docker-ce
-apt-get -f install docker-ce
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+apt-cache madison docker-ce
+sudo apt-get install docker-ce=5:18.09.1~3-0~ubuntu-xenial docker-ce-cli=5:18.09.1~3-0~ubuntu-xenial containerd.io
 sudo systemctl status docker
