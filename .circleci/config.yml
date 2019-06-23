@@ -17,7 +17,7 @@ jobs:
           shell: /bin/sh
           command: 
             ls;pwd;
-      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "git clone https://github.com/Craners/mysteryBox-api.git ~/mysteryBox-api"   
+      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "rm -rf ~/mysteryBox-api;git clone https://github.com/Craners/mysteryBox-api.git ~/mysteryBox-api"   
       - deploy:
           name: digital-ocean
           command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; sudo ./setup.sh"
