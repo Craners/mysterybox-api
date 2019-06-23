@@ -29,7 +29,7 @@ jobs:
 
       - run:
           shell: /bin/sh
-          command: ls; apt-get clean; rm -rf /var/lib/apt/lists/*; apt-get clean;apt-get update;apt-get upgrade
+          command: ls; sudo apt-get clean; sudo rm -rf /var/lib/apt/lists/*; sudo apt-get clean;sudo apt-get update;sudo apt-get upgrade;
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/
       - deploy:
           name: digital-ocean
