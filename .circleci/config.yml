@@ -16,7 +16,7 @@ jobs:
       - run:
           shell: /bin/sh
           command: 
-            ls;pwd; git clone https://github.com/Craners/mysteryBox-api.git;
+            ls;pwd; cd ~; git clone https://github.com/Craners/mysteryBox-api.git;
       - deploy:
           name: digital-ocean
           command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; ./setup.sh -y"
