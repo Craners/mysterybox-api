@@ -26,6 +26,6 @@ jobs:
       # - run: yarn test
       - deploy:
           branch: master
-          commands:
-          - echo 'deploying master branch'
-          - ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; ./setup.sh"
+          command: |
+          echo 'deploying master branch'
+          ssh -v $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; ./setup.sh"
