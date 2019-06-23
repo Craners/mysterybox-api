@@ -21,5 +21,7 @@ jobs:
       - deploy:
           name: digital-ocean
           command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; sudo sh ./setup.sh"
+      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "docker run -p 3000:3000 -d amir/mysterybox-api"   
       # # run tests!
       # - run: yarn test
+      # docker run -p 3000:3000 -d amir/mysterybox-api
