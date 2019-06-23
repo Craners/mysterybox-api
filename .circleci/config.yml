@@ -24,7 +24,7 @@ jobs:
       #     command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "docker build -t amir/mysterybox-api .;docker images;"
       # # run tests!
       # - run: yarn test
-      - deployment:
+      - deploy:
           branch: master
           commands:
           - echo 'deploying master branch'
