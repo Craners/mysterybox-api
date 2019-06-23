@@ -15,10 +15,5 @@ jobs:
             - '9d:b1:27:67:0f:93:48:13:c7:9a:32:31:b2:1e:50:a9'
       - run:
           shell: /bin/sh
-          command: ls
-      # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/
-      - deploy:
-          name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd mysteryBox-api; docker build -t amir/mysterybox-api .;docker images;"
-      # # run tests!
-      # - run: yarn test
+          command: 
+            sudo sh setup.sh
