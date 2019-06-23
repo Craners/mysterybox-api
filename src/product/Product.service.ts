@@ -121,10 +121,12 @@ export class ProductService {
     }
 
     const shopData = await this.sharedService.requestData(options);
-    console.log(shopData);
-    const resultVerify = verify(ResultCreateProduct, shopData).value();
-
+    // const resultVerify = verify(ResultCreateProduct, shopData).value();
+    // console.log(resultVerify);
     
-    return shopData;
+    return {
+      product: shopData.body.product,
+      statusCode: shopData.statusCode,
+    };
   }
 }

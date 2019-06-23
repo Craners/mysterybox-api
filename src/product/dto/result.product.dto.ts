@@ -1,4 +1,4 @@
-import { Type, adjust } from 'specified';
+import { Type, adjust, definitionOf } from 'specified';
 
 export class ResultCreateProductBase {
   product: {
@@ -6,19 +6,19 @@ export class ResultCreateProductBase {
     handle: string;
     title: string;
   };
+
+  statusCode: string;
 }
 
 export const ResultCreateProductSpec = {
-  product: {
-    id: Type.number,
-    handle: Type.string,
-    title: Type.string,
-  }
+  id: Type.number,
+  handle: Type.string,
+  title: Type.string,
 };
 
 export const ResultCreateProduct = Type.object({
-  statusCode: Type.string,
-  body: adjust(Type.object(ResultCreateProductSpec.product), {
-    strict: false,
+  body: Type.object({
+    product: adjust(Type.object(ResultCreateProductSpec), { strict: false }),
   }),
+  statusCode: Type.string,
 });

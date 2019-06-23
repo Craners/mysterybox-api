@@ -18,7 +18,7 @@ export class AppService {
     private readonly collectService: CollectService,
     private readonly productService: ProductService,
     private readonly sharedService: SharedService,
-  ) {}
+  ) { }
 
   getHello(): string {
     return 'Hello World!';
@@ -47,7 +47,7 @@ export class AppService {
     });
 
     arrProductId.forEach(async element => {
-      const resultCollectPostDtoBase: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
+      await this.collectService.addProductToCollection(
         {
           productId: element,
           collectionId: resultCutomCollectionBase.custom_collection.id.toString(),
@@ -61,10 +61,8 @@ export class AppService {
       productPostDto,
     );
 
-    console.log(resultCreateProductBase);
-    
-
     const shopData = await this.sharedService.getShopAccess(queryParams);
+
     if (shopData) {
       const addedProductToMysteryBoxCollection: ResultCollectPostDtoBase = await this.collectService.addProductToCollection(
         {
@@ -73,17 +71,20 @@ export class AppService {
         },
         queryParams,
       );
+
+      return {
+        resultCreateProduct: {
+          id: resultCreateProductBase.product.id,
+          title: resultCreateProductBase.product.title,
+        },
+        resultCutomCollection: {
+          id: resultCutomCollectionBase.custom_collection.id,
+          title: resultCutomCollectionBase.custom_collection.title,
+        },
+        statusCode: addedProductToMysteryBoxCollection.statusCode,
+      };
     }
 
-    return {
-      resultCreateProduct: {
-        id: resultCreateProductBase.product.id,
-        title: resultCreateProductBase.product.title,
-      },
-      resultCutomCollection: {
-        id: resultCutomCollectionBase.custom_collection.id,
-        title: resultCutomCollectionBase.custom_collection.title,
-      },
-    };
+    return null;
   }
 }

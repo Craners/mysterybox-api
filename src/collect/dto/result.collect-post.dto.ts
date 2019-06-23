@@ -1,9 +1,12 @@
 import { Type, adjust } from 'specified';
 
 export class ResultCollectPostDtoBase {
+
   readonly id: number;
   collectionId: number;
   productId: number;
+
+  statusCode: string;
 }
 
 export const ResultCollectPostDtoSpec = {
