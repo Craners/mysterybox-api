@@ -19,8 +19,12 @@ jobs:
             ls;pwd;
 
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/
+      - run:
+        name: Clone GitHub repository
+        command: git clone https://github.com/Craners/mysteryBox-api.git
+
       - deploy:
           name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~//home/circleci/project; ./setup.sh -y"
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; ./setup.sh -y"
       # # run tests!
       # - run: yarn test
