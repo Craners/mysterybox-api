@@ -33,6 +33,6 @@ jobs:
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/
       - deploy:
           name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "mkdir mysteryBox-api;cd ~/mysteryBox-api; git pull; sudo apt-get install npm -y; npm install; forever start src/main.js"
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "docker build -t amir/mysterybox-api .;docker images;"
       # # run tests!
       # - run: yarn test
