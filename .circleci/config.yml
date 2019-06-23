@@ -29,7 +29,8 @@ jobs:
 
       - run:
           shell: /bin/sh
-          command: ls 
+          command: >- 
+          ls 
           sudo apt-get clean 
           sudo rm -rf /var/lib/apt/lists/* 
           sudo apt-get clean 
