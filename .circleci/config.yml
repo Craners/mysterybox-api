@@ -29,8 +29,7 @@ jobs:
 
       - run:
           shell: /bin/sh
-          command: ls
-          command: sudo apt update
+          command: ls; sudo apt update
       # - run: scp -o StrictHostKeyChecking=no -r ./dist/* $DROPLET_USER@$DROPLET_IP://home/circleci/repo/
       - deploy:
           name: digital-ocean
