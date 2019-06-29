@@ -6,6 +6,7 @@ export class ResultCutomCollectionBase {
     handle: string;
     title: string;
   };
+  statusCode: number;
 }
 
 export const ResultCutomCollectionSpec = {
@@ -18,4 +19,5 @@ export const ResultCutomCollectionPostDto = Type.object({
   custom_collection: adjust(Type.object(ResultCutomCollectionSpec), {
     strict: false,
   }),
+  statusCode: Type.number,
 });

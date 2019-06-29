@@ -4,6 +4,6 @@ export class ResponseModel {
 
     constructor(body: any, statusCode: string) {
         this.body = body;
-        this.statusCode = statusCode;
+        this.body.statusCode = statusCode;
     }
 };

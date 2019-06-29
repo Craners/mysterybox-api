@@ -77,7 +77,7 @@ export class CustomCollectionService {
 
     if (!exists) {
       const res = await this.sharedService.requestData(options);
-      const result: ResultCutomCollectionBase = res.body;      
+      const result: ResultCutomCollectionBase = res.body;
       const resultVerify = verify(ResultCutomCollectionPostDto, result).value();
       return result;
     }

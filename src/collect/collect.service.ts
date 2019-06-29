@@ -49,14 +49,10 @@ export class CollectService {
       };
     }
 
-    const result = await this.sharedService.requestData(options);
-    // const resultVerify = verify(ResultCollectPostDto, result).value();
-    return {
-      collectionId: result.body.collect.collection_id,
-      id: result.body.collect.id,
-      productId: result.body.collect.product_id,
-      statusCode: result.statusCode,
-    };
+    const res = await this.sharedService.requestData(options);
+    const result: ResultCollectPostDtoBase = res.body;
+    const resultVerify = verify(ResultCollectPostDto, result).value();
+    return result;
   }
 
   async removeProductFromCollection(queryParam: any): Promise<any> {

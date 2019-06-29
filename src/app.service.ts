@@ -36,10 +36,10 @@ export class AppService {
     );
 
     if (resultCutomCollectionBase == null) {
-      return new HttpException(
-        `Collection '${cutomCollectionPostDto.title}' already exists.`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      return {
+        error: `Collection '${cutomCollectionPostDto.title}' already exists.`,
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+      };
     }
 
     const arrProductId = arrProduct.map(element => {
@@ -85,6 +85,9 @@ export class AppService {
       };
     }
 
-    return null;
+    return {
+      error: `ShopData is null. Failed to retrieve.`,
+      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+    };
   }
 }

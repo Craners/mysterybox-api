@@ -7,7 +7,7 @@ export class ResultCreateProductBase {
     title: string;
   };
 
-  statusCode: string;
+  statusCode: number;
 }
 
 export const ResultCreateProductSpec = {
@@ -17,8 +17,6 @@ export const ResultCreateProductSpec = {
 };
 
 export const ResultCreateProduct = Type.object({
-  body: Type.object({
-    product: adjust(Type.object(ResultCreateProductSpec), { strict: false }),
-  }),
-  statusCode: Type.string,
+  product: adjust(Type.object(ResultCreateProductSpec), { strict: false }),
+  statusCode: Type.number,
 });
