@@ -20,18 +20,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
               "docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
-          command: |
-            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-              "docker stop amir/mysterybox-api || true"
-          command: |
-            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-              "docker rm amir/mysterybox-api || true"
-          command: |
-            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-              "docker run -d -p 3000:3000 --name amir/mysterybox-api $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
+
 
 workflows:
   version: 2
