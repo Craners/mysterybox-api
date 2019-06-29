@@ -1,27 +1,57 @@
-version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
-
-    docker:
-      - image: circleci/node:8.10
-
+    machine: true
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - '9d:b1:27:67:0f:93:48:13:c7:9a:32:31:b2:1e:50:a9'
       - run:
-          shell: /bin/sh
-          command: 
-            ls;pwd;
-      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "rm -rf ~/mysteryBox-api;git clone https://github.com/Craners/mysteryBox-api.git ~/mysteryBox-api"   
+          name: Build
+          command: |
+            docker build \
+              -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG \
+              -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
+              --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
+              .
+            # docker login $DOCKER_REGISTRY -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
+            docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
+            docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+  deploy:
+    docker:
+      - image: circleci/node:8.10
+    steps:
+      - checkout
+      - run:
+          name: Pulling new container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+              "docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
+          name: Stopping old container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+              "docker stop amir/mysterybox-api || true"
+          name: Removing old container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+              "docker rm amir/mysterybox-api || true"
+          name: Deploying new container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+              "docker run -d -p 3000:3000 --name amir/mysterybox-api $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*$/
       - deploy:
-          name: digital-ocean
-          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; sudo sh ./setup.sh"
-      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "docker run -p 3000:3000 -d amir/mysterybox-api"   
-      # # run tests!
-      # - run: yarn test
-      # docker run -p 3000:3000 -d amir/mysterybox-api
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*$/

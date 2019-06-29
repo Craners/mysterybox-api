@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+
+    docker:
+      - image: circleci/node:8.10
+
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - '9d:b1:27:67:0f:93:48:13:c7:9a:32:31:b2:1e:50:a9'
+      - run:
+          shell: /bin/sh
+          command: 
+            ls;pwd;
+      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "rm -rf ~/mysteryBox-api;git clone https://github.com/Craners/mysteryBox-api.git ~/mysteryBox-api"   
+      - deploy:
+          name: digital-ocean
+          command: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd ~/mysteryBox-api; sudo sh ./setup.sh"
+      - run: ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "docker run -p 3000:3000 -d amir/mysterybox-api"   
+      # # run tests!
+      # - run: yarn test
+      # docker run -p 3000:3000 -d amir/mysterybox-api
