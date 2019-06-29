@@ -25,7 +25,6 @@ jobs:
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
               "docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
 
-
 workflows:
   version: 2
   deploy:
