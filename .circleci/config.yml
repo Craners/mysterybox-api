@@ -20,19 +20,15 @@ jobs:
     steps:
       - checkout
       - run:
-          displayName: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
               "docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
-          displayName: Stopping old container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
               "docker stop amir/mysterybox-api || true"
-          displayName: Removing old container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
               "docker rm amir/mysterybox-api || true"
-          displayName: Deploying new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
               "docker run -d -p 3000:3000 --name amir/mysterybox-api $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
