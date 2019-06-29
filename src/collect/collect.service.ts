@@ -6,7 +6,7 @@ import { ResultCollectPostDto, ResultCollectPostDtoBase } from './dto/result.col
 
 @Injectable()
 export class CollectService {
-  constructor(private readonly sharedService: SharedService) {}
+  constructor(private readonly sharedService: SharedService) { }
 
   async getCollects(queryParam: any): Promise<any> {
     const shopData = await this.sharedService.getShopAccess(queryParam);
@@ -49,13 +49,10 @@ export class CollectService {
       };
     }
 
-    const result = await this.sharedService.requestData(options);
+    const res = await this.sharedService.requestData(options);
+    const result: ResultCollectPostDtoBase = res.body;
     const resultVerify = verify(ResultCollectPostDto, result).value();
-    return {
-      collectionId: resultVerify.collect.collection_id,
-      id: resultVerify.collect.id,
-      productId: resultVerify.collect.product_id,
-    };
+    return result;
   }
 
   async removeProductFromCollection(queryParam: any): Promise<any> {
@@ -71,7 +68,7 @@ export class CollectService {
         method: 'DELETE',
         uri: `https://${shopData.shop}/admin/collects/${
           queryParam.collection_id
-        }.json`,
+          }.json`,
         headers: {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopData.access_token,

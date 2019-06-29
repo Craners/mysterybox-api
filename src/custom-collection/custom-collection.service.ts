@@ -30,7 +30,7 @@ export class CustomCollectionService {
 
   async getCustomCollectionByTitle(queryParam: any, collectionName: string): Promise<any> {
     const collections = await this.getCustomCollections(queryParam);
-    const filtered = collections.custom_collections.filter(collection => {
+    const filtered = collections.body.custom_collections.filter(collection => {
       return collection.title === collectionName;
     });
 
@@ -54,7 +54,7 @@ export class CustomCollectionService {
     let exists = true;
     if (shopData) {
       const collections = await this.getCustomCollections(shopData);
-      exists = this.checkCollectionExists(collections, customCollectionPostDto.title);
+      exists = this.checkCollectionExists(collections.body, customCollectionPostDto.title);
 
       options = {
         method: 'POST',
@@ -76,9 +76,8 @@ export class CustomCollectionService {
     }
 
     if (!exists) {
-      const result: ResultCutomCollectionBase = await this.sharedService.requestData(
-        options,
-      );
+      const res = await this.sharedService.requestData(options);
+      const result: ResultCutomCollectionBase = res.body;
       const resultVerify = verify(ResultCutomCollectionPostDto, result).value();
       return result;
     }

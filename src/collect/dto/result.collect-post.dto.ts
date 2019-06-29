@@ -1,9 +1,12 @@
 import { Type, adjust } from 'specified';
 
 export class ResultCollectPostDtoBase {
-  readonly id: number;
-  collectionId: number;
-  productId: number;
+  collect: {
+    readonly id: number;
+    collectionId: number;
+    productId: number;
+  };
+  statusCode: number;
 }
 
 export const ResultCollectPostDtoSpec = {
@@ -16,4 +19,5 @@ export const ResultCollectPostDto = Type.object({
   collect: adjust(Type.object(ResultCollectPostDtoSpec), {
     strict: false,
   }),
+  statusCode: Type.number,
 });

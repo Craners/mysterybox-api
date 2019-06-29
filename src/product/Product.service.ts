@@ -64,7 +64,7 @@ export class ProductService {
       options = {
         uri: `https://${shopAccess.shop}/admin/products.json?collection_id=${
           collectionId.collectionId
-        }`,
+          }`,
         headers: {
           'cache-control': 'no-cache',
           'X-Shopify-Access-Token': shopAccess.access_token,
@@ -120,8 +120,9 @@ export class ProductService {
       };
     }
 
-    const shopData = await this.sharedService.requestData(options);
-    const resultVerify = verify(ResultCreateProduct, shopData).value();
-    return shopData;
+    const res = await this.sharedService.requestData(options);
+    const result: ResultCreateProductBase = res.body;
+    const resultVerify = verify(ResultCreateProduct, result).value();
+    return result;
   }
 }
