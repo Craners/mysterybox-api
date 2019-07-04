@@ -7,12 +7,12 @@ jobs:
           name: Build
           command: |
             docker build \
-              -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG . \
+              -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 . \
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               .
             # docker login $DOCKER_REGISTRY -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
-            docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG
+            docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
   deploy:
     docker:
@@ -23,19 +23,13 @@ jobs:
           name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-              "docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_TAG"
+              "docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1"
 
 workflows:
   version: 2
   deploy:
     jobs:
       - build:
-          filters:
-            tags:
-              only: /^v\d*\.\d*\.\d*$/
       - deploy:
           requires:
             - build
-          filters:
-            tags:
-              only: /^v\d*\.\d*\.\d*$/
