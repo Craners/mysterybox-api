@@ -1,4 +1,3 @@
-version: 2
 jobs:
   build:
     machine: true
@@ -17,7 +16,7 @@ jobs:
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
   deploy:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:8.10 
     steps:
       - checkout
       - run:
@@ -32,15 +31,11 @@ workflows:
     jobs:
       - build:
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /^v\d*\.\d*\.\d*$/
       - deploy:
           requires:
             - build
           filters:
-            branches:
-              ignore: /.*/
             tags:
               only: /^v\d*\.\d*\.\d*$/
