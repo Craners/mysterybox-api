@@ -11,7 +11,7 @@ jobs:
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               .
-            docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
+            docker login -u $DOCKER_REGISTRY_USER --password-stdin $DOCKER_REGISTRY_PASSWORD
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
   deploy:
