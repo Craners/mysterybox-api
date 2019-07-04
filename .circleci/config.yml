@@ -30,6 +30,12 @@ workflows:
   deploy:
     jobs:
       - build:
+          filters:
+            tags:
+              only: /^v\d*\.\d*\.\d*$/
       - deploy:
           requires:
             - build
+          filters:
+            tags:
+              only: /^v\d*\.\d*\.\d*$/
