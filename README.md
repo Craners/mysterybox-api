@@ -18,7 +18,7 @@ node v8.11.3
 
 ![Mock up 1](https://raw.githubusercontent.com/Craners/mysteryBox-api/master/artboard1.png)
 
-### Installing
+### Run via npm
 
 This should help you get running.
 
@@ -29,8 +29,19 @@ npm install
 ```
 npm run serve
 ```
-
 the application will run on localhost:3000.
+
+### Run as container
+```
+docker build .
+```
+
+```
+docker run --name=api -d -i -t -p 3000:3000 <imageID>
+```
+the application will run on localhost:3000.
+
+please note: you are going to need the `.env` file in the root directory.
 
 <!-- ## Running the tests
 
