@@ -1,4 +1,4 @@
-# Mystery Box [![CircleCI](https://circleci.com/gh/Craners/mysteryBox-api/tree/master.svg?style=svg)](https://circleci.com/gh/Craners/mysteryBox-api/tree/master)
+# Mystery Box [![CircleCI](https://circleci.com/gh/Craners/mysterybox-api.svg?style=svg)](https://circleci.com/gh/Craners/mysterybox-api)
 
 This application takes care of collecting customer details after the sales are made.
 
