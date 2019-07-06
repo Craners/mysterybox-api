@@ -23,20 +23,21 @@ jobs:
           name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1 
-            sudo docker run --name=beer -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
+            sudo systemctl start docker
+            docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+            sudo docker run --name=api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 
 workflows:
   version: 2
   deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /^v\d*\.\d*\.\d*$/
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /^v\d*\.\d*\.\d*$/
       - deploy:
-          requires:
-            - build
+          # requires:
+          #   - build
           filters:
             tags:
               only: /^v\d*\.\d*\.\d*$/
