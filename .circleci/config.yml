@@ -45,7 +45,7 @@ jobs:
           name: Run the container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            sudo docker run --name api -d -i -t -p 4000:80 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+            sudo docker run --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
           environment:
             SHOPIFY_API_KEY: $SHOPIFY_API_KEY 
             SHOPIFY_API_SECRET_KEY: $SHOPIFY_API_SECRET_KEY 
