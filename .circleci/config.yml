@@ -32,8 +32,12 @@ jobs:
           name: Create env file 
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            touch .env
-            echo 123 >> .env 
+            sudo echo SHOPIFY_API_KEY=$SHOPIFY_API_KEY >> .env \
+            sudo echo SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY >> .env \
+            sudo echo APP_SCOPE=$APP_SCOPE >> .env \
+            sudo echo APP_DOMAIN=$APP_DOMAIN >> .env \
+            sudo echo appStoreTokenTest=$appStoreTokenTest >> .env \
+            sudo echo FE_DOMAIN=$FE_DOMAIN >> .env 
           environment:
             SHOPIFY_API_KEY: $SHOPIFY_API_KEY 
             SHOPIFY_API_SECRET_KEY: $SHOPIFY_API_SECRET_KEY 
@@ -41,7 +45,6 @@ jobs:
             APP_DOMAIN: $APP_DOMAIN 
             appStoreTokenTest: $appStoreTokenTest 
             FE_DOMAIN: $FE_DOMAIN 
-      - run: echo "A first hello" >> .env
       - run:
           name: Run the container
           command: |
