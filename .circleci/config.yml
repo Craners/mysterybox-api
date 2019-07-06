@@ -23,8 +23,7 @@ jobs:
           name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
-            usermod -aG docker $USER
+            ls -lah /var/run/docker.sock
             docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
             sudo docker run --name=api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 
