@@ -8,16 +8,18 @@ jobs:
           command: |
             docker build \
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
-              --build-arg SHOPIFY_API_KEY=$SHOPIFY_API_KEY \
-              --build-arg SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY \
-              --build-arg APP_SCOPE=$APP_SCOPE \
-              --build-arg APP_DOMAIN=$APP_DOMAIN \
-              --build-arg appStoreTokenTest=$appStoreTokenTest \
-              --build-arg FE_DOMAIN=$FE_DOMAIN \
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               .
             docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+            environment:
+              SHOPIFY_API_KEY=$SHOPIFY_API_KEY 
+              SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY 
+              APP_SCOPE=$APP_SCOPE 
+              APP_DOMAIN=$APP_DOMAIN 
+              appStoreTokenTest=$appStoreTokenTest 
+              FE_DOMAIN=$FE_DOMAIN 
+
   deploy:
     machine: true
     steps:
