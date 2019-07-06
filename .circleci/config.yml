@@ -9,7 +9,7 @@ jobs:
             docker build \
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
-              --build-arg SHOPIFY_API_KEY=$SHOPIFY_API_KEY
+              --build-arg SHOPIFY_API_KEY=$SHOPIFY_API_KEY \
               .
             docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
