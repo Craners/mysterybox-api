@@ -12,13 +12,6 @@ jobs:
               .
             docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
-          # environment:
-          #   SHOPIFY_API_KEY: $SHOPIFY_API_KEY 
-          #   SHOPIFY_API_SECRET_KEY: $SHOPIFY_API_SECRET_KEY 
-          #   APP_SCOPE: $APP_SCOPE 
-          #   APP_DOMAIN: $APP_DOMAIN 
-          #   appStoreTokenTest: $appStoreTokenTest 
-          #   FE_DOMAIN: $FE_DOMAIN 
 
   deploy:
     machine: true
@@ -36,17 +29,15 @@ jobs:
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
             sudo docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
       - run:
-          name: Run the container
+          name: Create env file 
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            sudo docker run \
-            -e SHOPIFY_API_KEY=$SHOPIFY_API_KEY \
-            -e SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY \
-            -e APP_SCOPE=$APP_SCOPE \
-            -e APP_DOMAIN=$APP_DOMAIN \
-            -e appStoreTokenTest=$appStoreTokenTest \
-            -e FE_DOMAIN=$FE_DOMAIN \
-            --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+            SHOPIFY_API_KEY=$SHOPIFY_API_KEY > .env 
+            SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY > .env
+            APP_SCOPE=$APP_SCOPE > .env 
+            APP_DOMAIN=$APP_DOMAIN > .env
+            appStoreTokenTest=$appStoreTokenTest > .env 
+            FE_DOMAIN=$FE_DOMAIN > .env 
           environment:
             SHOPIFY_API_KEY: $SHOPIFY_API_KEY 
             SHOPIFY_API_SECRET_KEY: $SHOPIFY_API_SECRET_KEY 
@@ -54,14 +45,22 @@ jobs:
             APP_DOMAIN: $APP_DOMAIN 
             appStoreTokenTest: $appStoreTokenTest 
             FE_DOMAIN: $FE_DOMAIN 
+      - run:
+          name: Run the container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+            sudo docker run \
+            --env-file .env \ 
+            --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+
 workflows:
   version: 2
   deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /^v\d*\.\d*\.\d*$/
+      # - build:
+      #     filters:
+      #       tags:
+      #         only: /^v\d*\.\d*\.\d*$/
       - deploy:
           requires:
             - build
