@@ -9,9 +9,17 @@ jobs:
             docker build \
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
+              --build-arg SHOPIFY_API_KEY=$SHOPIFY_API_KEY
               .
             docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+          environment:
+            SHOPIFY_API_KEY:$SHOPIFY_API_KEY 
+            SHOPIFY_API_SECRET_KEY:$SHOPIFY_API_SECRET_KEY 
+            APP_SCOPE:$APP_SCOPE 
+            APP_DOMAIN:$APP_DOMAIN 
+            appStoreTokenTest:$appStoreTokenTest 
+            FE_DOMAIN:$FE_DOMAIN 
 
   deploy:
     machine: true
@@ -34,12 +42,12 @@ jobs:
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
             sudo docker run --name api -d -i -t -p 4000:80 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
           environment:
-            SHOPIFY_API_KEY=$SHOPIFY_API_KEY 
-            SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY 
-            APP_SCOPE=$APP_SCOPE 
-            APP_DOMAIN=$APP_DOMAIN 
-            appStoreTokenTest=$appStoreTokenTest 
-            FE_DOMAIN=$FE_DOMAIN 
+            SHOPIFY_API_KEY:$SHOPIFY_API_KEY 
+            SHOPIFY_API_SECRET_KEY:$SHOPIFY_API_SECRET_KEY 
+            APP_SCOPE:$APP_SCOPE 
+            APP_DOMAIN:$APP_DOMAIN 
+            appStoreTokenTest:$appStoreTokenTest 
+            FE_DOMAIN:$FE_DOMAIN 
 workflows:
   version: 2
   deploy:
