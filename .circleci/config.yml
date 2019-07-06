@@ -31,9 +31,8 @@ jobs:
       - run:
           name: Create env file 
           command: |
-            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP 
-            touch .env 
-            echo SHOPIFY_API_KEY=$SHOPIFY_API_KEY >> .env 
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+            touch .env && echo SHOPIFY_API_KEY=$SHOPIFY_API_KEY >> .env 
           environment:
             SHOPIFY_API_KEY: $SHOPIFY_API_KEY 
             SHOPIFY_API_SECRET_KEY: $SHOPIFY_API_SECRET_KEY 
