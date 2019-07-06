@@ -23,9 +23,7 @@ jobs:
           name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            sudo groupadd docker
-            sudo usermod -aG docker $(whoami)
-            newgrp docker
+            sudo usermod -aG docker root
             docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
             sudo docker run --name=api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 
