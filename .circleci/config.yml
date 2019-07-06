@@ -8,6 +8,12 @@ jobs:
           command: |
             docker build \
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
+              -e SHOPIFY_API_KEY=$SHOPIFY_API_KEY
+              -e SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY
+              -e APP_SCOPE=$APP_SCOPE
+              -e APP_DOMAIN=$APP_DOMAIN
+              -e appStoreTokenTest=$appStoreTokenTest
+              -e FE_DOMAIN=$FE_DOMAIN
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               .
             docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
@@ -16,24 +22,33 @@ jobs:
     machine: true
     steps:
       - checkout
+      # - run:
+      #     name: Remove container
+      #     command: |
+      #       ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+      #       sudo docker kill client && docker rm client
+
       - run:
           name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest &&
-            sudo docker run --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
-
+            sudo docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+      - run:
+          name: Run the container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+            sudo docker run --name client -d -i -t -p 4000:80 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 workflows:
   version: 2
   deploy:
     jobs:
-      # - build:
-      #     filters:
-      #       tags:
-      #         only: /^v\d*\.\d*\.\d*$/
+      - build:
+          filters:
+            tags:
+              only: /^v\d*\.\d*\.\d*$/
       - deploy:
-          # requires:
-          #   - build
+          requires:
+            - build
           filters:
             tags:
               only: /^v\d*\.\d*\.\d*$/
