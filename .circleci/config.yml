@@ -7,12 +7,10 @@ jobs:
           name: Build
           command: |
             docker build \
-              -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1  \
               -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               --cache-from $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
               .
             docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
-            docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1
             docker push $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
   deploy:
     machine: true
@@ -22,8 +20,8 @@ jobs:
           name: Pulling new container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
-            sudo docker run --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest \
+            docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest 
+            sudo docker run --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 
 workflows:
   version: 2
