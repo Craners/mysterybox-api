@@ -25,20 +25,21 @@ export class AuthenticationService {
     private readonly customCollectionService: CustomCollectionService,
     // config?: ConfigService,
   ) {
+    dotenv.config();
     // this.DATABASE_USER = config.get('DATABASE_USER');
-    this.DATABASE_USER = process.env.DATABASE_USER || require('./config');
+    this.DATABASE_USER = process.env.DATABASE_USER ;
     // this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
-    this.SHOPIFY_API_SECRET_KEY = process.env.SHOPIFY_API_SECRET_KEY || require('./config');
+    this.SHOPIFY_API_SECRET_KEY = process.env.SHOPIFY_API_SECRET_KEY || 'noShopifyKey';
     // this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
-    this.SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY || require('./config');
+    this.SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
     // this.APP_SCOPE = config.get('APP_SCOPE');
-    this.APP_SCOPE = process.env.APP_SCOPE || require('./config');
+    this.APP_SCOPE = process.env.APP_SCOPE;
     // this.APP_DOMAIN = config.get('APP_DOMAIN');
-    this.APP_DOMAIN = process.env.APP_DOMAIN || require('./config');
+    this.APP_DOMAIN = process.env.APP_DOMAIN;
     // this.appStoreTokenTest = config.get('appStoreTokenTest');
-    this.appStoreTokenTest = process.env.appStoreTokenTest || require('./config');
+    this.appStoreTokenTest = process.env.appStoreTokenTest;
     // this.FE_DOMAIN = config.get('FE_DOMAIN');
-    this.FE_DOMAIN = process.env.FE_DOMAIN || require('./config');
+    this.FE_DOMAIN = process.env.FE_DOMAIN;
     // this.verify = new Verify(config);
   }
 

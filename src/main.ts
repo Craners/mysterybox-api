@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   dotenv.config();
-  const PORT = process.env.PORT || require('./config') || 3000;
+  const PORT = process.env.PORT;
 
   const hostDomain = 'http://localhost:' + PORT;
 
