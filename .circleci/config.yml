@@ -29,22 +29,22 @@ jobs:
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
             sudo docker pull $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
       - run:
-          name: Create env file 
+          name: Stop container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            touch .env && export SHOPIFY_API_KEY=$SHOPIFY_API_KEY && echo $SHOPIFY_API_KEY > .env && echo '1' > .env
-          environment:
-            SHOPIFY_API_KEY: $SHOPIFY_API_KEY 
-            SHOPIFY_API_SECRET_KEY: $SHOPIFY_API_SECRET_KEY 
-            APP_SCOPE: $APP_SCOPE 
-            APP_DOMAIN: $APP_DOMAIN 
-            appStoreTokenTest: $appStoreTokenTest 
-            FE_DOMAIN: $FE_DOMAIN 
+            sudo docker stop api || true
+
+      - run:
+          name: Remove container
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+            sudo docker rm api || true
+
       - run:
           name: Run the container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            sudo docker run --env-file .env --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+            sudo docker run -e FE_DOMAIN=$FE_DOMAIN -e appStoreTokenTest=$appStoreTokenTest -e APP_DOMAIN=$APP_DOMAIN -e APP_SCOPE=$APP_SCOPE -e SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY -e SHOPIFY_API_KEY=$SHOPIFY_API_KEY --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 
 workflows:
   version: 2
