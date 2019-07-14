@@ -2,7 +2,7 @@ import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Verify } from '../utils/verify';
 import url = require('url');
 import request = require('request-promise');
-import { ConfigService } from 'src/config.service';
+// import { ConfigService } from 'src/config.service';
 import { ShopDbService } from 'src/shop-db/shop-db.service';
 import { CustomCollectionService } from 'src/custom-collection/custom-collection.service';
 import { CutomCollectionPostDto } from 'src/custom-collection/dto/custom-collection-post.dto';
@@ -22,16 +22,23 @@ export class AuthenticationService {
   constructor(
     private readonly shopService: ShopDbService,
     private readonly customCollectionService: CustomCollectionService,
-    config?: ConfigService,
+    // config?: ConfigService,
   ) {
-    this.DATABASE_USER = config.get('DATABASE_USER');
-    this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
-    this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
-    this.APP_SCOPE = config.get('APP_SCOPE');
-    this.APP_DOMAIN = config.get('APP_DOMAIN');
-    this.appStoreTokenTest = config.get('appStoreTokenTest');
-    this.FE_DOMAIN = config.get('FE_DOMAIN');
-    this.verify = new Verify(config);
+    // this.DATABASE_USER = config.get('DATABASE_USER');
+    this.DATABASE_USER = process.env.DATABASE_USER || 'emptydb';
+    // this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
+    this.SHOPIFY_API_SECRET_KEY = process.env.SHOPIFY_API_SECRET_KEY || 'noShopifyKey';
+    // this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
+    this.SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
+    // this.APP_SCOPE = config.get('APP_SCOPE');
+    this.APP_SCOPE = process.env.APP_SCOPE;
+    // this.APP_DOMAIN = config.get('APP_DOMAIN');
+    this.APP_DOMAIN = process.env.APP_DOMAIN;
+    // this.appStoreTokenTest = config.get('appStoreTokenTest');
+    this.appStoreTokenTest = process.env.appStoreTokenTest;
+    // this.FE_DOMAIN = config.get('FE_DOMAIN');
+    this.FE_DOMAIN = process.env.FE_DOMAIN;
+    // this.verify = new Verify(config);
   }
 
   mysteryBoxesCollectionDto(): CutomCollectionPostDto {

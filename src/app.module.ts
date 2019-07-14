@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from './config.module';
+// import { ConfigModule } from './config.module';
 import { ProductModule } from './product/Product.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CustomCollectionModule } from './custom-collection/custom-collection.module';
@@ -13,7 +13,7 @@ import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
-    ConfigModule,
+    // ConfigModule,
     ProductModule,
     AuthenticationModule,
     CustomCollectionModule,

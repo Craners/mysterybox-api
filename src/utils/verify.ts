@@ -1,11 +1,12 @@
 import hmacValidator = require('hmac-validator');
-import { ConfigService } from 'src/config.service';
+// import { ConfigService } from 'src/config.service';
 
 export class Verify {
   private SHOPIFY_API_SECRET_KEY: string;
 
-  constructor(config: ConfigService) {
-    this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
+  constructor() {
+    // this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
+    this.SHOPIFY_API_SECRET_KEY = process.env.SHOPIFY_API_SECRET_KEY;
   }
 
   verifyHmac(query: string) {

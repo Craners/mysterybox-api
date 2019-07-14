@@ -5,12 +5,12 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 
 import session = require('express-session');
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+  const PORT = process.env.PORT || 3000;
 
-  const hostDomain = 'http://localhost:3000';
+  const hostDomain = 'http://localhost:' + PORT;
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle('AfterSale REST API')
@@ -49,6 +49,6 @@ async function bootstrap() {
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(3000);
+  await app.listen(PORT);
 }
 bootstrap();
