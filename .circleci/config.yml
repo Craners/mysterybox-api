@@ -50,13 +50,13 @@ workflows:
   version: 2
   deploy:
     jobs:
-      # - build:
-      #     filters:
-      #       tags:
-      #         only: /^v\d*\.\d*\.\d*$/
+      - build:
+          filters:
+            tags:
+              only: /^v\d*\.\d*\.\d*$/
       - deploy:
-          # requires:
-          #   - build
+          requires:
+            - build
           filters:
             tags:
               only: /^v\d*\.\d*\.\d*$/
