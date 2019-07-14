@@ -17,11 +17,11 @@ jobs:
     machine: true
     steps:
       - checkout
-      # - run:
-      #     name: Remove container
-      #     command: |
-      #       ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-      #       sudo docker kill client && docker rm client
+      - run:
+          name: Remove image
+          command: |
+            ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
+            sudo docker image rm craners/mysterybox-api || true
 
       - run:
           name: Pulling new container
