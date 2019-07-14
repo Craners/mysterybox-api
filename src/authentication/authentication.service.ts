@@ -59,7 +59,7 @@ export class AuthenticationService {
     const appSecret = this.SHOPIFY_API_SECRET_KEY;
     const appScope = this.APP_SCOPE;
 
-    const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=https://${
+    const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=http://${
       this.APP_DOMAIN
       }/authentication`;
 
