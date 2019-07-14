@@ -2,13 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
-import { ValidationPipe } from '@nestjs/common';
+import * as dotenv from 'dotenv';
 
 import session = require('express-session');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  const PORT = process.env.PORT || 3000;
+  dotenv.config();
+  const PORT = process.env.PORT;
 
   const hostDomain = 'http://localhost:' + PORT;
 

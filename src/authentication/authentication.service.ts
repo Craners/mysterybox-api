@@ -3,6 +3,7 @@ import { Verify } from '../utils/verify';
 import url = require('url');
 import request = require('request-promise');
 // import { ConfigService } from 'src/config.service';
+import * as dotenv from 'dotenv';
 import { ShopDbService } from 'src/shop-db/shop-db.service';
 import { CustomCollectionService } from 'src/custom-collection/custom-collection.service';
 import { CutomCollectionPostDto } from 'src/custom-collection/dto/custom-collection-post.dto';
@@ -39,6 +40,7 @@ export class AuthenticationService {
     // this.FE_DOMAIN = config.get('FE_DOMAIN');
     this.FE_DOMAIN = process.env.FE_DOMAIN;
     // this.verify = new Verify(config);
+    dotenv.config();
   }
 
   mysteryBoxesCollectionDto(): CutomCollectionPostDto {
