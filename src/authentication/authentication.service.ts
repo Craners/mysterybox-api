@@ -1,5 +1,4 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { Verify } from '../utils/verify';
 import url = require('url');
 import request = require('request-promise');
 // import { ConfigService } from 'src/config.service';
@@ -8,6 +7,7 @@ import { ShopDbService } from 'src/shop-db/shop-db.service';
 import { CustomCollectionService } from 'src/custom-collection/custom-collection.service';
 import { CutomCollectionPostDto } from 'src/custom-collection/dto/custom-collection-post.dto';
 import { ImageDto } from 'src/custom-collection/dto/image.dto';
+import * as validShopifyRequest from 'valid-shopify-request';
 
 @Injectable()
 export class AuthenticationService {
@@ -16,7 +16,6 @@ export class AuthenticationService {
   private SHOPIFY_API_KEY: string;
   private APP_SCOPE: string;
   private APP_DOMAIN: string;
-  private verify: Verify;
   private appStoreTokenTest: string;
   public FE_DOMAIN: string;
 
@@ -27,7 +26,7 @@ export class AuthenticationService {
   ) {
     dotenv.config();
     // this.DATABASE_USER = config.get('DATABASE_USER');
-    this.DATABASE_USER = process.env.DATABASE_USER ;
+    this.DATABASE_USER = process.env.DATABASE_USER;
     // this.SHOPIFY_API_SECRET_KEY = config.get('SHOPIFY_API_SECRET_KEY');
     this.SHOPIFY_API_SECRET_KEY = process.env.SHOPIFY_API_SECRET_KEY || 'noShopifyKey';
     // this.SHOPIFY_API_KEY = config.get('SHOPIFY_API_KEY');
@@ -61,7 +60,7 @@ export class AuthenticationService {
     const appSecret = this.SHOPIFY_API_SECRET_KEY;
     const appScope = this.APP_SCOPE;
 
-    const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=http://${
+    const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${appId}&scope=${appScope}&redirect_uri=${
       this.APP_DOMAIN
       }/authentication`;
 
@@ -83,13 +82,8 @@ export class AuthenticationService {
       securityPass = false;
     }
 
-    const urlObj = url.parse(req.url);
-    const query = urlObj.search.slice(1);
-    if (this.verify.verifyHmac(query)) {
-      securityPass = true;
-    } else {
-      securityPass = false;
-    }
+    //hmac validator
+    securityPass = await validShopifyRequest(this.SHOPIFY_API_SECRET_KEY, req.query);
 
     if (securityPass && regex) {
       const accessTokenRequestUrl =
