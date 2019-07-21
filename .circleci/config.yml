@@ -44,7 +44,7 @@ jobs:
           name: Run the container
           command: |
             ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP \
-            sudo docker run -e FE_DOMAIN=$FE_DOMAIN -e appStoreTokenTest=$appStoreTokenTest -e APP_DOMAIN=$APP_DOMAIN -e APP_SCOPE=$APP_SCOPE -e SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY -e SHOPIFY_API_KEY=$SHOPIFY_API_KEY --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+            sudo docker run -e FE_DOMAIN=$FE_DOMAIN -e appStoreTokenTest=$appStoreTokenTest -e PORT=3000 -e APP_DOMAIN=$APP_DOMAIN -e APP_SCOPE=$APP_SCOPE -e SHOPIFY_API_SECRET_KEY=$SHOPIFY_API_SECRET_KEY -e SHOPIFY_API_KEY=$SHOPIFY_API_KEY --name api -d -i -t -p 3000:3000 $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
 
 workflows:
   version: 2
