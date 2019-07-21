@@ -7,7 +7,7 @@ import { ShopDbService } from 'src/shop-db/shop-db.service';
 import { CustomCollectionService } from 'src/custom-collection/custom-collection.service';
 import { CutomCollectionPostDto } from 'src/custom-collection/dto/custom-collection-post.dto';
 import { ImageDto } from 'src/custom-collection/dto/image.dto';
-import * as validShopifyRequest from 'valid-shopify-request';
+import validShopifyRequest from 'valid-shopify-request';
 
 @Injectable()
 export class AuthenticationService {
